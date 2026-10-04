@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — ZoomingCLS{% endblock %}
+{% block topbar_title %}Dashboard{% endblock %}
+{% block topbar_actions %}
+  {% if profile.is_teacher %}
+    <a href="{% url 'classroom_create' %}" class="btn btn-primary btn-sm">
+      <i class="fa-solid fa-plus"></i> New Classroom
+    </a>
+  {% else %}
+    <a href="{% url 'classroom_join' %}" class="btn btn-primary btn-sm">
+      <i class="fa-solid fa-right-to-bracket"></i> Join Class
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Welcome back, {{ user.first_name|default:user.username }}! 👋</h1>
+  <p>
+    {% if profile.is_teacher %}
+      You are teaching {{ classrooms.count }} classroom{{ classrooms.count|pluralize }}.
+    {% else %}
+      You are enrolled in {{ classrooms.count }} classroom{{ classrooms.count|pluralize }}.
+    {% endif %}
+  </p>
+</div>
+
+{% if classrooms %}
+<div class="grid-3">
+  {% for cls in classrooms %}
+  <a href="{% url 'classroom_detail' cls.pk %}" style="text-decoration:none;">
+    <div class="classroom-card">
+      <div class="classroom-banner bg-{{ cls.banner_color }}">
+        <div>
+          <h3>{{ cls.name }}</h3>
+          {% if cls.section %}<p>{{ cls.section }}</p>{% endif %}
+        </div>
+        {% if cls.subject %}<p>{{ cls.subject }}</p>{% endif %}
+      </div>
+      <div class="classroom-card-body">
+        <span>
+          {% if profile.is_teacher %}
+            <i class="fa-solid fa-users" style="font-size:.75rem;"></i> {{ cls.get_student_count }} student{{ cls.get_student_count|pluralize }}
+          {% else %}
+            <i class="fa-solid fa-chalkboard-user" style="font-size:.75rem;"></i> {{ cls.teacher.get_full_name|default:cls.teacher.username }}
+          {% endif %}
+        </span>
+        <span class="cls-code">{{ cls.code }}</span>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <div class="icon">📚</div>
+  {% if profile.is_teacher %}
+    <p>No classrooms yet. <a href="{% url 'classroom_create' %}">Create your first classroom</a> to get started.</p>
+  {% else %}
+    <p>You're not enrolled in any classrooms yet. <a href="{% url 'classroom_join' %}">Join a class</a> with a code from your teacher.</p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block title %}{{ classroom.name }} — ZoomingCLS{% endblock %}
+{% block topbar_title %}{{ classroom.name }}{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'assignment_list' classroom.pk %}" class="btn btn-outline btn-sm">
+    <i class="fa-solid fa-file-lines"></i> Assignments
+  </a>
+  <a href="{% url 'meeting_list' classroom.pk %}" class="btn btn-outline btn-sm">
+    <i class="fa-solid fa-video"></i> Meetings
+  </a>
+  <a href="{% url 'classroom_members' classroom.pk %}" class="btn btn-outline btn-sm">
+    <i class="fa-solid fa-users"></i> Members
+  </a>
+  {% if is_teacher %}
+  <a href="{% url 'classroom_edit' classroom.pk %}" class="btn btn-outline btn-sm">
+    <i class="fa-solid fa-pen"></i> Edit
+  </a>
+  {% else %}
+  <form method="post" action="{% url 'classroom_leave' classroom.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button class="btn btn-outline btn-sm" type="submit"
+      onclick="return confirm('Leave this classroom?')">
+      <i class="fa-solid fa-right-from-bracket"></i> Leave
+    </button>
+  </form>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div style="display:flex;gap:24px;">
+
+  <!-- Stream (left) -->
+  <div style="flex:1;min-width:0;">
+    <!-- Class banner header -->
+    <div class="classroom-banner bg-{{ classroom.banner_color }} mb-16" style="height:auto;padding:20px 24px;border-radius:var(--radius);margin-bottom:20px;">
+      <h2 style="font-size:1.5rem;font-weight:700;">{{ classroom.name }}</h2>
+      {% if classroom.section %}<p>{{ classroom.section }}</p>{% endif %}
+      {% if classroom.subject %}<p>{{ classroom.subject }}</p>{% endif %}
+      {% if classroom.description %}<p style="margin-top:6px;font-size:.85rem;opacity:.85;">{{ classroom.description }}</p>{% endif %}
+    </div>
+
+    <!-- Post composer -->
+    <div class="card mb-16">
+      <div class="card-body">
+        <form method="post" action="{% url 'post_create' classroom.pk %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group mb-8">
+            {{ post_form.post_type }}
+          </div>
+          <div class="form-group mb-8">
+            <textarea name="content" rows="3" class="form-control"
+              placeholder="Share something with your class..."></textarea>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <label class="btn btn-outline btn-sm" style="cursor:pointer;">
+              <i class="fa-solid fa-paperclip"></i> Attach
+              <input type="file" name="attachment" style="display:none;">
+            </label>
+            <button class="btn btn-primary btn-sm" type="submit">
+              <i class="fa-solid fa-paper-plane"></i> Post
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Posts stream -->
+    {% for post in posts %}
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">{{ post.author.username|first|upper }}</div>
+        <div class="post-meta">
+          <div class="author">{{ post.author.get_full_name|default:post.author.username }}</div>
+          <div class="time">{{ post.created_at|timesince }} ago</div>
+        </div>
+        <div class="post-type-badge">
+          {% if post.post_type == 'announcement' %}
+            <span class="badge badge-primary">📢 Announcement</span>
+          {% elif post.post_type == 'material' %}
+            <span class="badge badge-success">📄 Material</span>
+          {% else %}
+            <span class="badge badge-warning">❓ Question</span>
+          {% endif %}
+        </div>
+        {% if post.author == request.user or is_teacher %}
+        <form method="post" action="{% url 'post_delete' post.pk %}">
+          {% csrf_token %}
+          <button class="btn btn-outline btn-sm" type="submit"
+            onclick="return confirm('Delete this post?')">
+            <i class="fa-solid fa-trash" style="color:var(--danger);"></i>
+          </button>
+        </form>
+        {% endif %}
+      </div>
+
+      <div class="post-content">{{ post.content }}</div>
+
+      {% if post.attachments.all %}
+      <div class="post-attachments">
+        {% for att in post.attachments.all %}
+        <a href="{{ att.file.url }}" class="attachment-chip" target="_blank">
+          {% if att.is_pdf %}<i class="fa-solid fa-file-pdf" style="color:var(--danger);"></i>
+          {% elif att.is_image %}<i class="fa-solid fa-image" style="color:var(--primary);"></i>
+          {% else %}<i class="fa-solid fa-file"></i>{% endif %}
+          {{ att.name }}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Comments -->
+      <div class="comment-section">
+        {% for comment in post.comments.all %}
+        <div class="comment-item">
+          <div class="comment-avatar">{{ comment.author.username|first|upper }}</div>
+          <div class="comment-bubble">
+            <div class="comment-author">{{ comment.author.get_full_name|default:comment.author.username }}</div>
+            <div class="comment-text">{{ comment.content }}</div>
+          </div>
+        </div>
+        {% endfor %}
+
+        <form method="post" action="{% url 'comment_create' post.pk %}" class="comment-form">
+          {% csrf_token %}
+          <div class="comment-avatar">{{ request.user.username|first|upper }}</div>
+          <input type="text" name="content" placeholder="Add a comment..." required maxlength="1000">
+          <button class="btn btn-primary btn-sm" type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+      <div class="icon">🗒️</div>
+      <p>No posts yet. Be the first to share something!</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Sidebar info (right) -->
+  <div style="width:240px;flex-shrink:0;">
+    <div class="card mb-16">
+      <div class="card-header">Class Info</div>
+      <div class="card-body">
+        <div class="mb-8">
+          <div class="text-xs text-muted mb-4">Class Code</div>
+          <div style="font-family:monospace;font-size:1.1rem;font-weight:700;letter-spacing:.1em;color:var(--primary);">{{ classroom.code }}</div>
+          <div class="text-xs text-muted">Share this with students</div>
+        </div>
+        <hr class="divider">
+        <div class="mb-8">
+          <div class="text-xs text-muted mb-4">Teacher</div>
+          <div class="text-sm font-medium">{{ classroom.teacher.get_full_name|default:classroom.teacher.username }}</div>
+        </div>
+        <div>
+          <div class="text-xs text-muted mb-4">Students</div>
+          <div class="text-sm font-medium">{{ classroom.get_student_count }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Quick Links</div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+        <a href="{% url 'assignment_list' classroom.pk %}" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-file-lines"></i> Assignments
+        </a>
+        <a href="{% url 'meeting_list' classroom.pk %}" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-video"></i> Meetings
+        </a>
+        <a href="{% url 'classroom_members' classroom.pk %}" class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-users"></i> Members
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

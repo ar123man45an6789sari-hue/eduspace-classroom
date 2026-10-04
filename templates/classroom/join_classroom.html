@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Join a Classroom – EduSpace{% endblock %}
+{% block page_title %}Join a Classroom{% endblock %}
+{% block content %}
+<div class="form-container" style="margin-top:40px;">
+    <div class="card" style="text-align:center;padding:40px;">
+        <div style="font-size:3rem;color:var(--accent-light);margin-bottom:16px;"><i class="fas fa-sign-in-alt"></i>
+        </div>
+        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:8px;">Join a Classroom</h2>
+        <p style="color:var(--text-secondary);margin-bottom:28px;">Enter the class code shared by your teacher</p>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group" style="text-align:left;">
+                <label>Class Code</label>
+                <input type="text" name="join_code" placeholder="e.g. AB12CD34"
+                    value="{{ form.join_code.value|default:'' }}"
+                    style="text-transform:uppercase;font-size:1.1rem;letter-spacing:.1em;text-align:center;"
+                    maxlength="10" autocomplete="off">
+                {% if form.join_code.errors %}<ul class="errorlist">{% for e in form.join_code.errors %}<li>{{ e }}</li>
+                    {% endfor %}</ul>{% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary"
+                style="width:100%;justify-content:center;padding:12px;font-size:1rem;margin-top:8px;">
+                <i class="fas fa-door-open"></i> Join Class
+            </button>
+        </form>
+        <a href="{% url 'student_dashboard' %}" class="btn btn-ghost"
+            style="margin-top:12px;width:100%;justify-content:center;">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

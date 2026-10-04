@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Classroom – EduSpace{% endblock %}
+{% block page_title %}{{ action }} Classroom{% endblock %}
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-chalkboard"></i> {{ action }} Classroom</h3>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Class Name *</label>
+                <input type="text" name="name" placeholder="e.g. Mathematics Grade 10"
+                    value="{{ form.name.value|default:'' }}" required>
+                {% for e in form.name.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group">
+                <label>Subject *</label>
+                <input type="text" name="subject" placeholder="e.g. Algebra, Physics, History"
+                    value="{{ form.subject.value|default:'' }}" required>
+                {% for e in form.subject.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="3"
+                    placeholder="Brief description of this class...">{{ form.description.value|default:'' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Cover Color</label>
+                <div class="color-picker">
+                    {{ form.cover_color }}
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:24px;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ action }}
+                    Classroom</button>
+                {% if classroom %}
+                <a href="{% url 'classroom_detail_teacher' classroom.pk %}" class="btn btn-ghost">Cancel</a>
+                {% else %}
+                <a href="{% url 'teacher_dashboard' %}" class="btn btn-ghost">Cancel</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

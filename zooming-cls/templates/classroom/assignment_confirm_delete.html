@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Delete Assignment{% endblock %}
+{% block topbar_title %}Delete Assignment{% endblock %}
+{% block content %}
+<div style="max-width:480px;margin:0 auto;text-align:center;padding-top:40px;">
+  <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
+  <h2 class="font-bold mb-8">Delete "{{ assignment.title }}"?</h2>
+  <p class="text-muted mb-24">All student submissions will also be deleted. This cannot be undone.</p>
+  <form method="post" style="display:inline-flex;gap:10px;">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash"></i> Yes, Delete</button>
+    <a href="{% url 'assignment_detail' assignment.pk %}" class="btn btn-outline">Cancel</a>
+  </form>
+</div>
+{% endblock %}

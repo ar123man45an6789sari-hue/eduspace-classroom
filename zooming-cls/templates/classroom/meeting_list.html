@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Meetings — {{ classroom.name }}{% endblock %}
+{% block topbar_title %}{{ classroom.name }} — Meetings{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'classroom_detail' classroom.pk %}" class="btn btn-outline btn-sm">← Stream</a>
+  {% if is_teacher %}
+  <a href="{% url 'meeting_create' classroom.pk %}" class="btn btn-primary btn-sm">
+    <i class="fa-solid fa-plus"></i> Schedule Meeting
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Meetings</h1>
+  <p>Zoom / Google Meet sessions for {{ classroom.name }}</p>
+</div>
+
+{% if meetings %}
+{% for meeting in meetings %}
+<div class="meeting-card">
+  <div class="meeting-info">
+    <h4>{{ meeting.title }}</h4>
+    {% if meeting.description %}
+    <p class="text-sm text-muted mt-4">{{ meeting.description }}</p>
+    {% endif %}
+    <div class="meeting-meta">
+      <span><i class="fa-solid fa-calendar"></i> {{ meeting.scheduled_at|date:"l, M d Y — g:i A" }}</span>
+      <span><i class="fa-solid fa-clock"></i> {{ meeting.duration }} minutes</span>
+      {% if meeting.password %}
+      <span><i class="fa-solid fa-lock"></i> Password: <code>{{ meeting.password }}</code></span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="meeting-actions">
+    <span class="badge
+      {% if meeting.status == 'live' %}badge-success
+      {% elif meeting.status == 'ended' %}badge-gray
+      {% else %}badge-primary{% endif %}">
+      {% if meeting.status == 'live' %}🔴 Live
+      {% elif meeting.status == 'ended' %}✓ Ended
+      {% else %}📅 Scheduled{% endif %}
+    </span>
+    {% if meeting.meet_link %}
+    <a href="{{ meeting.meet_link }}" target="_blank" class="btn btn-primary btn-sm">
+      <i class="fa-solid fa-video"></i> Join Meeting
+    </a>
+    {% endif %}
+    {% if is_teacher %}
+    <form method="post" action="{% url 'meeting_delete' meeting.pk %}">
+      {% csrf_token %}
+      <button class="btn btn-danger btn-sm" type="submit"
+        onclick="return confirm('Delete this meeting?')">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="empty-state">
+  <div class="icon">📹</div>
+  <p>
+    No meetings scheduled.
+    {% if is_teacher %}<a href="{% url 'meeting_create' classroom.pk %}">Schedule the first meeting</a>.{% endif %}
+  </p>
+</div>
+{% endif %}
+{% endblock %}

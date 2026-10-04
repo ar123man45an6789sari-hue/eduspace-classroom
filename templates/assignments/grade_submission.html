@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Grade Submission – EduSpace{% endblock %}
+{% block page_title %}Grade Submission{% endblock %}
+{% block content %}
+<div style="max-width:600px;margin:0 auto;">
+    <div class="card" style="margin-bottom:16px;">
+        <div class="card-header">
+            <div>
+                <span class="badge badge-sky">{{ submission.assignment.classroom.name }}</span>
+                <h3 style="font-size:1.1rem;font-weight:700;margin-top:8px;">{{ submission.assignment.title }}</h3>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+            <div class="avatar-placeholder">{{ submission.student.first_name|first|upper }}{{
+                submission.student.last_name|first|upper }}</div>
+            <div>
+                <div style="font-weight:600;">{{ submission.student.get_full_name|default:submission.student.username }}
+                </div>
+                <div style="font-size:.8rem;color:var(--text-muted);">Submitted {{ submission.submitted_at|date:"M d, Y
+                    H:i" }}</div>
+            </div>
+            <a href="{{ submission.file.url }}" download class="btn btn-ghost btn-sm" style="margin-left:auto;">
+                <i class="fas fa-download"></i> {{ submission.filename }}
+            </a>
+        </div>
+        {% if submission.note %}
+        <div
+            style="margin-top:12px;padding:12px;background:var(--bg-primary);border-radius:var(--radius-sm);font-size:.88rem;color:var(--text-secondary);">
+            <strong>Student note:</strong> {{ submission.note }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-star"></i> Assign Grade</h3>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group">
+                    <label>Marks (out of {{ submission.assignment.max_marks }}) *</label>
+                    <input type="number" name="marks" min="0" max="{{ submission.assignment.max_marks }}"
+                        value="{{ form.marks.value|default:'' }}" placeholder="e.g. 85">
+                    {% for e in form.marks.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status">
+                        {{ form.status }}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Feedback <small style="color:var(--text-muted)">(optional)</small></label>
+                <textarea name="feedback" rows="3"
+                    placeholder="Provide feedback to the student...">{{ form.feedback.value|default:'' }}</textarea>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:20px;">
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Save Grade</button>
+                <a href="{% url 'view_submissions' submission.assignment.pk %}" class="btn btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

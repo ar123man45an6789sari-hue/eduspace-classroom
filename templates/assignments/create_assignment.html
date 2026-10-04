@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Assignment – EduSpace{% endblock %}
+{% block page_title %}{{ action }} Assignment{% endblock %}
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-clipboard-list"></i> {{ action }} Assignment</h3>
+            <span class="badge">{{ classroom.name }}</span>
+        </div>
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Title *</label>
+                <input type="text" name="title" placeholder="Assignment title" value="{{ form.title.value|default:'' }}"
+                    required>
+                {% for e in form.title.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group">
+                <label>Description *</label>
+                <textarea name="description" rows="5"
+                    placeholder="Describe the assignment, instructions, requirements...">{{ form.description.value|default:'' }}</textarea>
+                {% for e in form.description.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group">
+                    <label>Due Date & Time *</label>
+                    <input type="datetime-local" name="due_date" value="{{ form.due_date.value|default:'' }}" required>
+                    {% for e in form.due_date.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <label>Maximum Marks</label>
+                    <input type="number" name="max_marks" min="1" max="1000"
+                        value="{{ form.max_marks.value|default:'100' }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Attachment <small style="color:var(--text-muted)">(optional – question paper, reference
+                        doc)</small></label>
+                <input type="file" name="attachment">
+                {% if assignment and assignment.attachment %}<p class="help-text">Current: {{ assignment.attachment.name
+                    }}</p>{% endif %}
+            </div>
+            <div style="display:flex;gap:10px;margin-top:24px;">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ action }}
+                    Assignment</button>
+                <a href="{% url 'classroom_detail_teacher' classroom.pk %}" class="btn btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

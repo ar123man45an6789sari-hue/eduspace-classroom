@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Assignments — {{ classroom.name }}{% endblock %}
+{% block topbar_title %}{{ classroom.name }} — Assignments{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'classroom_detail' classroom.pk %}" class="btn btn-outline btn-sm">← Stream</a>
+  {% if is_teacher %}
+  <a href="{% url 'assignment_create' classroom.pk %}" class="btn btn-primary btn-sm">
+    <i class="fa-solid fa-plus"></i> New Assignment
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Assignments</h1>
+  <p>{{ assignments.count }} assignment{{ assignments.count|pluralize }} in this class</p>
+</div>
+
+<div class="card">
+  {% if assignments %}
+  {% for assignment in assignments %}
+  <div class="assignment-row" style="padding:16px 20px;">
+    <div class="assignment-icon">
+      <i class="fa-solid fa-file-lines"></i>
+    </div>
+    <div class="assignment-info">
+      <h4>
+        <a href="{% url 'assignment_detail' assignment.pk %}">{{ assignment.title }}</a>
+      </h4>
+      <p>
+        {% if assignment.due_date %}
+          Due {{ assignment.due_date|date:"M d, Y — g:i A" }}
+          {% if assignment.is_overdue %}<span class="badge badge-danger" style="margin-left:6px;">Overdue</span>{% endif %}
+        {% else %}
+          No due date
+        {% endif %}
+        · {{ assignment.total_marks }} marks
+      </p>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      {% if not is_teacher %}
+        {% if assignment.my_submission %}
+          {% if assignment.my_submission.status == 'graded' %}
+            <span class="badge badge-success">
+              ✅ Graded {{ assignment.my_submission.marks }}/{{ assignment.total_marks }}
+            </span>
+          {% elif assignment.my_submission.status == 'late' %}
+            <span class="badge badge-warning">⏰ Late</span>
+          {% else %}
+            <span class="badge badge-primary">✔ Submitted</span>
+          {% endif %}
+        {% else %}
+          <span class="badge badge-danger">⚠ Missing</span>
+        {% endif %}
+      {% else %}
+        <span class="text-xs text-muted">{{ assignment.submissions.count }} submitted</span>
+      {% endif %}
+      <a href="{% url 'assignment_detail' assignment.pk %}" class="btn btn-outline btn-sm">View</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">📝</div>
+    <p>
+      No assignments yet.
+      {% if is_teacher %}<a href="{% url 'assignment_create' classroom.pk %}">Create the first assignment</a>.{% endif %}
+    </p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

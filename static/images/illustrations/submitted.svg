@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a34a"/>
+      <stop offset="100%" style="stop-color:#15803d"/>
+    </linearGradient>
+    <linearGradient id="paperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc"/>
+      <stop offset="100%" style="stop-color:#f1f5f9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle (success green) -->
+  <circle cx="200" cy="130" r="115" fill="#dcfce7" opacity="0.5"/>
+
+  <!-- Confetti dots -->
+  <circle cx="90" cy="70" r="5" fill="#4f46e5" opacity="0.6"/>
+  <circle cx="310" cy="60" r="4" fill="#f97316" opacity="0.7"/>
+  <circle cx="330" cy="100" r="6" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="70" cy="130" r="4" fill="#0ea5e9" opacity="0.6"/>
+  <circle cx="345" cy="175" r="5" fill="#ec4899" opacity="0.5"/>
+  <circle cx="80" cy="190" r="3" fill="#16a34a" opacity="0.6"/>
+
+  <!-- Confetti strips -->
+  <rect x="100" y="55" width="8" height="14" rx="2" fill="#4f46e5" opacity="0.5" transform="rotate(20 104 62)"/>
+  <rect x="290" y="65" width="8" height="14" rx="2" fill="#f97316" opacity="0.5" transform="rotate(-15 294 72)"/>
+  <rect x="60" y="155" width="6" height="12" rx="2" fill="#ec4899" opacity="0.4" transform="rotate(30 63 161)"/>
+  <rect x="330" y="145" width="6" height="12" rx="2" fill="#0ea5e9" opacity="0.5" transform="rotate(-25 333 151)"/>
+  <rect x="120" y="45" width="5" height="10" rx="2" fill="#fbbf24" opacity="0.5" transform="rotate(10 122 50)"/>
+  <rect x="270" y="48" width="5" height="10" rx="2" fill="#16a34a" opacity="0.5" transform="rotate(-10 272 53)"/>
+
+  <!-- Paper / submission card -->
+  <rect x="135" y="78" width="130" height="160" rx="8" fill="url(#paperGrad)" filter="drop-shadow(0 6px 18px rgba(0,0,0,0.12))"/>
+  <!-- Paper header -->
+  <rect x="135" y="78" width="130" height="30" rx="8" fill="#4f46e5"/>
+  <rect x="135" y="96" width="130" height="12" fill="#4f46e5"/>
+  <text x="200" y="97" font-family="Arial" font-size="8" fill="white" text-anchor="middle" font-weight="bold">MY SUBMISSION</text>
+  <!-- Paper lines (greyed out = done) -->
+  <rect x="150" y="122" width="90" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="150" y="134" width="75" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="150" y="145" width="85" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="150" y="156" width="60" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="150" y="167" width="70" height="5" rx="2" fill="#e2e8f0"/>
+  <!-- Submitted badge -->
+  <rect x="155" y="185" width="90" height="22" rx="11" fill="#dcfce7"/>
+  <text x="200" y="200" font-family="Arial" font-size="9" fill="#16a34a" text-anchor="middle" font-weight="bold">✅ Submitted!</text>
+  <!-- Date -->
+  <text x="200" y="225" font-family="Arial" font-size="8" fill="#94a3b8" text-anchor="middle">Submitted just now</text>
+
+  <!-- Big green check circle (overlapping paper) -->
+  <circle cx="310" cy="112" r="38" fill="url(#checkGrad)" filter="drop-shadow(0 6px 16px rgba(22,163,74,0.4))"/>
+  <polyline points="292,112 304,124 328,100" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Stars around check -->
+  <text x="258" y="78" font-size="16" opacity="0.7">⭐</text>
+  <text x="340" y="76" font-size="12" opacity="0.6">✨</text>
+  <text x="348" y="148" font-size="14" opacity="0.5">🌟</text>
+
+  <!-- Text -->
+  <text x="200" y="265" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#16a34a" text-anchor="middle">Assignment Submitted!</text>
+  <text x="200" y="283" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Great job! Your teacher will review your work soon.</text>
+</svg>

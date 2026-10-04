@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Confirm Delete – EduSpace{% endblock %}
+{% block page_title %}Confirm{% endblock %}
+{% block content %}
+<div class="confirm-box">
+    <div class="danger-icon"><i class="fas fa-exclamation-triangle"></i></div>
+    <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:10px;">
+        {{ type|default:"Delete" }}?
+    </h2>
+    <p style="color:var(--text-secondary);margin-bottom:28px;">
+        Are you sure you want to {{ action_label|default:"delete" }} <strong>{{ object }}</strong>?
+        This action cannot be undone.
+    </p>
+    <form method="post" style="display:flex;gap:12px;justify-content:center;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Yes, {{ action_label|default:"Delete" }}
+        </button>
+        <a href="javascript:history.back()" class="btn btn-ghost">Cancel</a>
+    </form>
+</div>
+{% endblock %}

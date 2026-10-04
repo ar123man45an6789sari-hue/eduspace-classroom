@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register — ZoomingCLS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #eef2ff, #dbeafe); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.12); width: 100%; max-width: 480px; padding: 36px; }
+    .logo { text-align: center; margin-bottom: 28px; }
+    .logo .icon { font-size: 2.5rem; color: #4f46e5; }
+    .logo h1 { font-size: 1.5rem; font-weight: 700; color: #4f46e5; margin-top: 6px; }
+    .logo p { color: #6b7280; font-size: .9rem; margin-top: 4px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: .875rem; font-weight: 500; margin-bottom: 5px; }
+    .form-control { width: 100%; padding: 9px 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: .875rem; font-family: inherit; }
+    .form-control:focus { outline: none; border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.1); }
+    .errorlist { list-style: none; }
+    .errorlist li { font-size: .8rem; color: #dc2626; margin-top: 3px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .role-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .role-btn { padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; background: white; cursor: pointer; text-align: center; font-size: .875rem; font-weight: 500; color: #374151; transition: all .15s; }
+    .role-btn input[type=radio] { display: none; }
+    .role-btn.selected, .role-btn:has(input:checked) { border-color: #4f46e5; background: #eef2ff; color: #4f46e5; }
+    .btn { width: 100%; padding: 11px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: .95rem; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:hover { background: #4338ca; }
+    .footer { text-align: center; margin-top: 20px; font-size: .875rem; color: #6b7280; }
+    .footer a { color: #4f46e5; font-weight: 500; }
+    .alert { padding: 10px 14px; background: #fee2e2; color: #991b1b; border-radius: 8px; font-size: .875rem; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="icon"><i class="fa-solid fa-video"></i></div>
+    <h1>ZoomingCLS</h1>
+    <p>Create your account</p>
+  </div>
+
+  {% if form.non_field_errors %}
+  <div class="alert">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" name="first_name" class="form-control" value="{{ form.first_name.value|default:'' }}" required>
+        {{ form.first_name.errors }}
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" name="last_name" class="form-control" value="{{ form.last_name.value|default:'' }}" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" value="{{ form.username.value|default:'' }}" required>
+      {{ form.username.errors }}
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}" required>
+    </div>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password1" class="form-control" required>
+        {{ form.password1.errors }}
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="password2" class="form-control" required>
+        {{ form.password2.errors }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">I am a...</label>
+      <div class="role-row">
+        <label class="role-btn {% if form.role.value == 'student' %}selected{% endif %}">
+          <input type="radio" name="role" value="student" {% if form.role.value != 'teacher' %}checked{% endif %}>
+          🎓 Student
+        </label>
+        <label class="role-btn {% if form.role.value == 'teacher' %}selected{% endif %}">
+          <input type="radio" name="role" value="teacher" {% if form.role.value == 'teacher' %}checked{% endif %}>
+          👩‍🏫 Teacher
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn">
+      <i class="fa-solid fa-user-plus"></i> Create Account
+    </button>
+  </form>
+
+  <div class="footer">
+    Already have an account? <a href="{% url 'login' %}">Sign in</a>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.role-btn').forEach(btn => {
+    btn.querySelector('input').addEventListener('change', () => {
+      document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+</script>
+</body>
+</html>

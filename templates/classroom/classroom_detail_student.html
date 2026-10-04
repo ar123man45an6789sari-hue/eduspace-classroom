@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}{{ classroom.name }} - EduSpace{% endblock %}
+{% block page_title %}{{ classroom.name }}{% endblock %}
+{% block content %}
+<div class="class-hero" style="background:{{ classroom.cover_color }};">
+    <div class="class-hero-content">
+        <h1>{{ classroom.name }}</h1>
+        <div class="subject">{{ classroom.subject }}</div>
+        <div class="teacher-label" style="display:inline-flex; align-items:center; gap:8px; background:rgba(0,0,0,0.2); padding:8px 16px; border-radius:var(--radius-full); backdrop-filter:blur(10px);"><i class="fas fa-chalkboard-teacher"></i> {{ classroom.teacher.get_full_name|default:classroom.teacher.username }}</div>
+    </div>
+</div>
+
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(this,'feed')"><i class="fas fa-stream"></i> Stream</button>
+    <button class="tab-btn" onclick="switchTab(this,'materials')"><i class="fas fa-folder"></i> Materials</button>
+    <button class="tab-btn" onclick="switchTab(this,'assignments')"><i class="fas fa-tasks"></i> Classwork</button>
+</div>
+<div class="tab-panel active" id="tab-feed">
+    {% if announcements %}
+    <div class="announcement-feed" style="display:flex; flex-direction:column; gap:20px;">
+        {% for ann in announcements %}
+        <div class="card fade-in" style="padding:24px;">
+            <div class="announcement-header" style="margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                <div class="announcement-meta" style="display:flex; align-items:center; gap:12px;">
+                    <div class="avatar-placeholder" style="width:34px;height:34px;font-size:.75rem;">{{ ann.author.first_name|first|upper }}{{ ann.author.last_name|first|upper }}</div>
+                    <div>
+                        <div style="font-weight:600;font-size:.9rem;">{{ ann.author.get_full_name|default:ann.author.username }}</div>
+                        <div class="announcement-time" style="color:var(--text-secondary); font-size:0.8rem;"><i class="fas fa-clock"></i> {{ ann.created_at|date:"M d, Y H:i" }}</div>
+                    </div>
+                </div>
+            </div>
+            {% if ann.title %}<div class="announcement-title" style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">{{ ann.title }}</div>{% endif %}
+            <div class="announcement-text" style="color:var(--text-secondary); line-height:1.6; white-space:pre-wrap;">{{ ann.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state card" style="text-align:center; padding:60px 20px;">
+        <i class="fas fa-bullhorn" style="font-size:3rem; color:var(--accent-glow); margin-bottom:20px;"></i>
+        <h3 style="font-size:1.4rem; font-weight:700; margin-bottom:8px;">No announcements yet</h3>
+        <p style="color:var(--text-secondary);">Your teacher hasn't posted any announcements here.</p>
+    </div>
+    {% endif %}
+</div>
+<div class="tab-panel" id="tab-materials">
+    {% if materials %}
+    <div class="item-list">
+        {% for mat in materials %}
+        <div class="list-item">
+            <div class="list-item-icon" style="background:#e8f0fe;color:#1a73e8;"><i class="fas fa-file-alt"></i></div>
+            <div class="list-item-body">
+                <div class="list-item-title">{{ mat.title }}</div>
+                <div class="list-item-subtitle">{{ mat.filename }} - Uploaded {{ mat.uploaded_at|date:"M d, Y" }}</div>
+            </div>
+            <a href="{{ mat.file.url }}" class="btn btn-ghost btn-sm" download><i class="fas fa-download"></i> Download</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state card" style="text-align:center; padding:60px 20px;">
+        <i class="fas fa-folder-open" style="font-size:3rem; color:var(--accent-glow); margin-bottom:20px;"></i>
+        <h3 style="font-size:1.4rem; font-weight:700; margin-bottom:8px;">No materials attached</h3>
+        <p style="color:var(--text-secondary);">Your teacher hasn't uploaded any class materials yet.</p>
+    </div>
+    {% endif %}
+</div>
+<div class="tab-panel" id="tab-assignments">
+    {% if assignments %}
+    <div class="item-list">
+        {% for asgn in assignments %}
+        <div class="list-item">
+            <div class="list-item-icon" style="background:#e6f4ea;color:#1e8e3e;"><i class="fas fa-clipboard-list"></i></div>
+            <div class="list-item-body">
+                <div class="list-item-title">{{ asgn.title }}</div>
+                <div class="list-item-subtitle">Due {{ asgn.due_date|date:"M d, Y H:i" }}</div>
+            </div>
+            <a href="{% url 'assignment_detail' asgn.pk %}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state card" style="text-align:center; padding:60px 20px;">
+        <i class="fas fa-tasks" style="font-size:3rem; color:var(--accent-glow); margin-bottom:20px;"></i>
+        <h3 style="font-size:1.4rem; font-weight:700; margin-bottom:8px;">No classwork assigned</h3>
+        <p style="color:var(--text-secondary);">You're all caught up! There are no assignments yet.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function switchTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+}
+</script>
+{% endblock %}

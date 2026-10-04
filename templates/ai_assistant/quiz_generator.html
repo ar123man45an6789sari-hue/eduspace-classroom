@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}AI Quiz Generator - EduSpace{% endblock %}
+{% block page_title %}AI Quiz Generator{% endblock %}
+{% block content %}
+<div class="ai-page-header"><div><span class="ai-eyebrow"><i class="fas fa-circle-question"></i> Teacher workspace</span><h1>Build a revision quiz</h1><p>Create answer-aware questions from a classroom material.</p></div></div>
+<div class="ai-layout ai-layout-wide">
+    <section class="card ai-form-card"><div class="ai-card-heading"><div class="ai-feature-icon"><i class="fas fa-list-check"></i></div><div><h2>Quiz settings</h2><p>Choose a source material and question count.</p></div></div><form method="post" class="ai-form">{% csrf_token %}{{ form.as_p }}<button class="btn btn-primary" type="submit"><i class="fas fa-wand-magic-sparkles"></i> Generate quiz</button></form></section>
+    <section class="card ai-result-card">{% if result %}<div class="ai-result-label"><i class="fas fa-list-check"></i> Generated quiz{% if selected_material %}<span class="ai-result-context">{{ selected_material.title }}</span>{% endif %}</div>{% for item in result.questions %}<article class="quiz-question"><span class="quiz-number">{{ forloop.counter }}</span><div><h3>{{ item.question }}</h3><ol class="quiz-options" type="A">{% for option in item.options %}<li>{{ option }}</li>{% endfor %}</ol><details><summary>Show answer and explanation</summary><p><strong>Answer:</strong> {{ item.answer }}</p><p>{{ item.explanation }}</p></details></div></article>{% endfor %}{% if result.raw %}<pre class="ai-raw">{{ result.raw }}</pre>{% endif %}{% else %}<div class="ai-placeholder"><i class="fas fa-circle-question"></i><h2>Your quiz will appear here</h2><p>Generate a set of questions that students can use for revision.</p></div>{% endif %}</section>
+</div>
+{% endblock %}

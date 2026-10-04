@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Edit Profile — ZoomingCLS{% endblock %}
+{% block topbar_title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div style="max-width:520px;">
+  <div class="page-header">
+    <h1>Edit Profile</h1>
+    <p>Update your personal information.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" name="first_name" class="form-control" value="{{ form.first_name.value|default:'' }}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-control" value="{{ form.last_name.value|default:'' }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" value="{{ form.email.value|default:'' }}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bio</label>
+          <textarea name="bio" rows="4" class="form-control"
+            placeholder="Tell the class a little about yourself...">{{ form.bio.value|default:'' }}</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Profile Picture</label>
+          {% if request.user.profile.avatar %}
+            <div class="mb-8">
+              <img src="{{ request.user.profile.avatar.url }}"
+                style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #e5e7eb;" alt="">
+            </div>
+          {% endif %}
+          <input type="file" name="avatar" class="form-control" accept="image/*">
+          <div class="form-hint">JPG, PNG or GIF. Max 5MB.</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-primary" type="submit">
+            <i class="fa-solid fa-check"></i> Save Changes
+          </button>
+          <a href="{% url 'profile' %}" class="btn btn-outline">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mt-16">
+    <div class="card-header">Change Password</div>
+    <div class="card-body">
+      <p class="text-sm text-muted mb-8">Use Django's built-in password change page.</p>
+      <a href="{% url 'password_change' %}" class="btn btn-outline btn-sm">
+        <i class="fa-solid fa-lock"></i> Change Password
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

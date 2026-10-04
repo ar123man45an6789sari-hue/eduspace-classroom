@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }} Assignment — ZoomingCLS{% endblock %}
+{% block topbar_title %}{{ action }} Assignment{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'assignment_list' classroom.pk %}" class="btn btn-outline btn-sm">← Assignments</a>
+{% endblock %}
+
+{% block content %}
+<div style="max-width:600px;">
+  <div class="page-header">
+    <h1>{{ action }} Assignment</h1>
+    <p>For: <strong>{{ classroom.name }}</strong></p>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label">Title *</label>
+          <input type="text" name="title" class="form-control" required placeholder="e.g. Chapter 3 Exercise"
+            value="{{ form.title.value|default:'' }}">
+          {% for e in form.title.errors %}<div class="form-error">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description / Instructions</label>
+          <textarea name="description" rows="5" class="form-control">{{ form.description.value|default:'' }}</textarea>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Due Date (optional)</label>
+            <input type="datetime-local" name="due_date" class="form-control"
+              value="{{ form.due_date.value|default:'' }}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Marks</label>
+            <input type="number" name="total_marks" class="form-control" min="1"
+              value="{{ form.total_marks.value|default:100 }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Attach Files (optional)</label>
+          <input type="file" name="attachments" class="form-control" multiple>
+          <div class="form-hint">You can attach PDFs, images, or documents.</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-primary" type="submit">
+            <i class="fa-solid fa-check"></i> {{ action }} Assignment
+          </button>
+          <a href="{% url 'assignment_list' classroom.pk %}" class="btn btn-outline">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

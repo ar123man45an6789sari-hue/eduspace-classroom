@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#eef2ff"/>
+      <stop offset="100%" style="stop-color:#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="board" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.12)"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="450" fill="url(#bg)"/>
+
+  <!-- Floating dots decoration -->
+  <circle cx="30" cy="60" r="5" fill="#c7d2fe" opacity="0.7"/>
+  <circle cx="570" cy="80" r="7" fill="#a5b4fc" opacity="0.5"/>
+  <circle cx="50" cy="400" r="4" fill="#c7d2fe" opacity="0.6"/>
+  <circle cx="555" cy="380" r="6" fill="#a5b4fc" opacity="0.4"/>
+  <circle cx="520" cy="160" r="4" fill="#c7d2fe" opacity="0.5"/>
+
+  <!-- Classroom floor -->
+  <ellipse cx="300" cy="400" rx="240" ry="18" fill="#e0e7ff" opacity="0.5"/>
+
+  <!-- Back wall -->
+  <rect x="60" y="60" width="480" height="280" rx="12" fill="white" opacity="0.6" filter="url(#shadow)"/>
+
+  <!-- Whiteboard / screen -->
+  <rect x="100" y="85" width="290" height="180" rx="8" fill="url(#board)" filter="url(#shadow)"/>
+  <!-- Board content: lines of text -->
+  <rect x="118" y="108" width="120" height="8" rx="4" fill="white" opacity="0.9"/>
+  <rect x="118" y="126" width="180" height="6" rx="3" fill="white" opacity="0.5"/>
+  <rect x="118" y="142" width="150" height="6" rx="3" fill="white" opacity="0.5"/>
+  <rect x="118" y="158" width="200" height="6" rx="3" fill="white" opacity="0.5"/>
+  <rect x="118" y="174" width="130" height="6" rx="3" fill="white" opacity="0.5"/>
+  <!-- Board formula highlight box -->
+  <rect x="118" y="196" width="140" height="40" rx="6" fill="rgba(255,255,255,0.15)"/>
+  <rect x="128" y="207" width="80" height="7" rx="3" fill="white" opacity="0.8"/>
+  <rect x="128" y="220" width="60" height="5" rx="2" fill="white" opacity="0.6"/>
+  <!-- Board footer bar -->
+  <rect x="100" y="255" width="290" height="10" rx="0" fill="rgba(0,0,0,0.15)"/>
+
+  <!-- Video camera on stand -->
+  <rect x="410" y="180" width="5" height="65" rx="2" fill="#94a3b8"/>
+  <rect x="400" y="243" width="26" height="4" rx="2" fill="#94a3b8"/>
+  <rect x="404" y="158" width="36" height="26" rx="5" fill="#1e293b"/>
+  <circle cx="422" cy="171" r="8" fill="#334155"/>
+  <circle cx="422" cy="171" r="5" fill="#0ea5e9"/>
+  <circle cx="422" cy="171" r="2" fill="#38bdf8"/>
+  <circle cx="406" cy="163" r="3" fill="#ef4444"/>
+
+  <!-- Teacher figure -->
+  <circle cx="460" cy="130" r="22" fill="#fde68a"/>
+  <!-- hair -->
+  <ellipse cx="460" cy="112" rx="22" ry="10" fill="#92400e"/>
+  <!-- body -->
+  <rect x="438" y="152" width="44" height="55" rx="8" fill="#4f46e5"/>
+  <!-- arms -->
+  <rect x="418" y="155" width="22" height="10" rx="5" fill="#4f46e5"/>
+  <rect x="462" y="155" width="22" height="10" rx="5" fill="#4f46e5"/>
+  <!-- legs -->
+  <rect x="442" y="205" width="14" height="35" rx="5" fill="#1e293b"/>
+  <rect x="460" y="205" width="14" height="35" rx="5" fill="#1e293b"/>
+  <!-- pointer stick -->
+  <rect x="392" y="145" width="32" height="4" rx="2" fill="#64748b" transform="rotate(-20 408 147)"/>
+
+  <!-- Student desks row -->
+  <!-- Desk 1 -->
+  <rect x="95" y="285" width="70" height="42" rx="4" fill="url(#desk)" filter="url(#shadow)"/>
+  <rect x="113" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <rect x="139" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <!-- Student 1 sitting -->
+  <circle cx="130" cy="268" r="14" fill="#fed7aa"/>
+  <ellipse cx="130" cy="256" rx="14" ry="6" fill="#7c3aed"/>
+  <rect x="116" y="282" width="28" height="8" rx="4" fill="#7c3aed"/>
+  <!-- notebook on desk -->
+  <rect x="103" y="289" width="30" height="22" rx="2" fill="white"/>
+  <rect x="106" y="294" width="20" height="3" rx="1" fill="#e0e7ff"/>
+  <rect x="106" y="300" width="20" height="3" rx="1" fill="#e0e7ff"/>
+  <rect x="106" y="306" width="14" height="3" rx="1" fill="#e0e7ff"/>
+
+  <!-- Desk 2 -->
+  <rect x="200" y="285" width="70" height="42" rx="4" fill="url(#desk)" filter="url(#shadow)"/>
+  <rect x="218" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <rect x="244" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <!-- Student 2 -->
+  <circle cx="235" cy="268" r="14" fill="#fca5a5"/>
+  <ellipse cx="235" cy="256" rx="14" ry="6" fill="#16a34a"/>
+  <rect x="221" y="282" width="28" height="8" rx="4" fill="#16a34a"/>
+  <!-- laptop on desk -->
+  <rect x="207" y="289" width="35" height="22" rx="2" fill="#1e293b"/>
+  <rect x="209" y="291" width="31" height="17" rx="1" fill="#0ea5e9" opacity="0.7"/>
+  <rect x="205" y="311" width="40" height="4" rx="2" fill="#334155"/>
+
+  <!-- Desk 3 -->
+  <rect x="308" y="285" width="70" height="42" rx="4" fill="url(#desk)" filter="url(#shadow)"/>
+  <rect x="326" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <rect x="352" y="327" width="8" height="25" rx="3" fill="#92400e"/>
+  <!-- Student 3 -->
+  <circle cx="343" cy="268" r="14" fill="#bbf7d0"/>
+  <ellipse cx="343" cy="256" rx="14" ry="6" fill="#1e293b"/>
+  <rect x="329" y="282" width="28" height="8" rx="4" fill="#dc2626"/>
+
+  <!-- Zoom call popup top right -->
+  <rect x="410" y="78" width="120" height="80" rx="10" fill="white" filter="url(#shadow)"/>
+  <rect x="410" y="78" width="120" height="24" rx="10" fill="#4f46e5"/>
+  <rect x="410" y="90" width="120" height="12" fill="#4f46e5"/>
+  <text x="425" y="94" font-family="Arial" font-size="9" fill="white" font-weight="bold">📹 Live Meeting</text>
+  <!-- mini video grid -->
+  <rect x="418" y="108" width="46" height="34" rx="4" fill="#1e293b"/>
+  <circle cx="441" cy="122" r="8" fill="#fde68a"/>
+  <rect x="474" y="108" width="46" height="34" rx="4" fill="#0f172a"/>
+  <circle cx="497" cy="122" r="8" fill="#bfdbfe"/>
+  <!-- green live dot -->
+  <circle cx="519" cy="82" r="4" fill="#22c55e"/>
+
+  <!-- Notification badge floating -->
+  <rect x="70" y="78" width="130" height="38" rx="10" fill="white" filter="url(#shadow)"/>
+  <circle cx="90" cy="97" r="12" fill="#fef9c3"/>
+  <text x="86" y="101" font-size="12">📝</text>
+  <rect x="107" y="88" width="75" height="6" rx="3" fill="#e0e7ff"/>
+  <rect x="107" y="100" width="55" height="5" rx="2" fill="#f1f5f9"/>
+
+  <!-- Assignment card floating bottom right -->
+  <rect x="415" y="296" width="130" height="60" rx="10" fill="white" filter="url(#shadow)"/>
+  <rect x="415" y="296" width="130" height="22" rx="10" fill="#f0fdf4"/>
+  <rect x="415" y="306" width="130" height="12" fill="#f0fdf4"/>
+  <text x="428" y="311" font-family="Arial" font-size="8" fill="#16a34a" font-weight="bold">✅ Assignment Due</text>
+  <rect x="425" y="326" width="80" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="425" y="336" width="60" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="425" y="346" width="50" height="8" rx="4" fill="#4f46e5"/>
+  <text x="432" y="353" font-family="Arial" font-size="6" fill="white">Submit Now</text>
+
+  <!-- Title text -->
+  <text x="300" y="430" font-family="Arial" font-size="16" font-weight="bold" fill="#4f46e5" text-anchor="middle">ZoomingCLS — Your Digital Classroom</text>
+</svg>

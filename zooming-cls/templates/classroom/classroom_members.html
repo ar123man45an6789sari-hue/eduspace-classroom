@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Members — {{ classroom.name }}{% endblock %}
+{% block topbar_title %}{{ classroom.name }} — Members{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'classroom_detail' classroom.pk %}" class="btn btn-outline btn-sm">← Stream</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Class Members</h1>
+  <p>{{ enrollments.count }} student{{ enrollments.count|pluralize }} enrolled</p>
+</div>
+
+<!-- Teacher -->
+<div class="card mb-16">
+  <div class="card-header">Teacher</div>
+  <div class="card-body">
+    <div class="flex gap-12" style="align-items:center;">
+      <div class="avatar" style="width:44px;height:44px;font-size:1rem;">
+        {% if classroom.teacher.profile.avatar %}
+          <img src="{{ classroom.teacher.profile.avatar.url }}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
+        {% else %}
+          {{ classroom.teacher.username|first|upper }}
+        {% endif %}
+      </div>
+      <div>
+        <div class="font-medium">{{ classroom.teacher.get_full_name|default:classroom.teacher.username }}</div>
+        <div class="text-xs text-muted">{{ classroom.teacher.email }}</div>
+      </div>
+      <span class="badge badge-primary" style="margin-left:auto;">Teacher</span>
+    </div>
+  </div>
+</div>
+
+<!-- Students -->
+<div class="card">
+  <div class="card-header">Students</div>
+  {% if enrollments %}
+  <table>
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Email</th>
+        <th>Joined</th>
+        {% if is_teacher %}<th>Action</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for enrollment in enrollments %}
+      <tr>
+        <td>
+          <div class="flex gap-8" style="align-items:center;">
+            <div class="avatar" style="width:32px;height:32px;font-size:.8rem;">
+              {{ enrollment.student.username|first|upper }}
+            </div>
+            <div>
+              <div class="font-medium text-sm">{{ enrollment.student.get_full_name|default:enrollment.student.username }}</div>
+              <div class="text-xs text-muted">@{{ enrollment.student.username }}</div>
+            </div>
+          </div>
+        </td>
+        <td class="text-sm text-muted">{{ enrollment.student.email }}</td>
+        <td class="text-sm text-muted">{{ enrollment.joined_at|date:"M d, Y" }}</td>
+        {% if is_teacher %}
+        <td>
+          <form method="post" action="{% url 'remove_student' classroom.pk enrollment.student.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm" type="submit"
+              onclick="return confirm('Remove {{ enrollment.student.username }} from this classroom?')">
+              <i class="fa-solid fa-user-minus"></i> Remove
+            </button>
+          </form>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">👥</div>
+    <p>No students have joined yet. Share the code <strong>{{ classroom.code }}</strong> with your students.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

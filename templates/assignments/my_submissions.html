@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}My Work – EduSpace{% endblock %}
+{% block page_title %}My Submissions{% endblock %}
+{% block content %}
+<div class="card">
+    {% if submissions %}
+    <div style="overflow-x:auto;">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Assignment</th>
+                    <th>Class</th>
+                    <th>Submitted</th>
+                    <th>Status</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in submissions %}
+                <tr style="cursor:pointer;" onclick="location.href='{% url 'assignment_detail' sub.assignment.pk %}'">
+                    <td style="font-weight:600;">{{ sub.assignment.title }}</td>
+                    <td><span class="badge badge-sky">{{ sub.assignment.classroom.name }}</span></td>
+                    <td style="font-size:.85rem;">{{ sub.submitted_at|date:"M d, Y H:i" }}</td>
+                    <td>
+                        <span
+                            class="badge {% if sub.status == 'graded' %}badge-green{% elif sub.status == 'late' %}badge-amber{% else %}badge-sky{% endif %}">
+                            {{ sub.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if sub.marks is not None %}
+                        <strong>{{ sub.marks }}/{{ sub.assignment.max_marks }}</strong>
+                        {% else %}<span style="color:var(--text-muted);">Pending</span>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-file-upload"></i>
+        <h3>No submissions yet</h3>
+        <p>Go to a classroom to submit your assignments</p>
+        <a href="{% url 'student_dashboard' %}" class="btn btn-primary" style="margin-top:20px;">
+            <i class="fas fa-th-large"></i> Go to Dashboard
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

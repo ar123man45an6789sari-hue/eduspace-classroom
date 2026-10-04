@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}AI Study Assistant - EduSpace{% endblock %}
+{% block page_title %}AI Study Assistant{% endblock %}
+{% block content %}
+<div class="ai-page-header">
+    <div><span class="ai-eyebrow"><i class="fas fa-sparkles"></i> Student workspace</span><h1>Ask your classroom</h1><p>Get answers grounded in the study materials your teacher shared.</p></div>
+</div>
+<div class="ai-layout">
+    <section class="card ai-form-card">
+        <div class="ai-card-heading"><div class="ai-feature-icon"><i class="fas fa-comments"></i></div><div><h2>Ask a question</h2><p>Select a classroom and ask about its materials.</p></div></div>
+        <form method="post" class="ai-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit"><i class="fas fa-wand-magic-sparkles"></i> Ask assistant</button>
+        </form>
+    </section>
+    <section class="card ai-result-card {% if not result %}ai-empty-result{% endif %}">
+        {% if result %}
+            <div class="ai-result-label"><i class="fas fa-lightbulb"></i> Assistant response</div>
+            {% if result.answer %}<div class="ai-answer">{{ result.answer|linebreaks }}</div>{% endif %}
+            {% if result.sources %}<div class="ai-detail"><strong>Based on</strong><div class="ai-chip-list">{% for source in result.sources %}<span class="badge badge-sky">{{ source }}</span>{% endfor %}</div></div>{% endif %}
+            {% if result.follow_up %}<div class="ai-follow-up"><strong>Keep exploring</strong><p>{{ result.follow_up }}</p></div>{% endif %}
+            {% if result.raw %}<pre class="ai-raw">{{ result.raw }}</pre>{% endif %}
+        {% else %}
+            <div class="ai-placeholder"><i class="fas fa-book-open"></i><h2>Your answer will appear here</h2><p>Ask a focused question about your classroom material to get started.</p></div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

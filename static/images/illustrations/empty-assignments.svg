@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="paperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc"/>
+      <stop offset="100%" style="stop-color:#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="pencilTop" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="135" r="110" fill="#fef9c3" opacity="0.4"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="230" rx="90" ry="10" fill="#e2e8f0" opacity="0.5"/>
+
+  <!-- Paper stack (back) -->
+  <rect x="138" y="85" width="120" height="148" rx="5" fill="#f1f5f9" transform="rotate(6 200 160)" filter="drop-shadow(2px 2px 4px rgba(0,0,0,0.08))"/>
+  <rect x="138" y="85" width="120" height="148" rx="5" fill="#f8fafc" transform="rotate(3 200 160)" filter="drop-shadow(1px 1px 3px rgba(0,0,0,0.06))"/>
+
+  <!-- Main paper -->
+  <rect x="140" y="75" width="120" height="155" rx="6" fill="url(#paperGrad)" filter="drop-shadow(0 6px 16px rgba(0,0,0,0.12))"/>
+  <!-- Paper header bar -->
+  <rect x="140" y="75" width="120" height="28" rx="6" fill="#4f46e5"/>
+  <rect x="140" y="90" width="120" height="13" fill="#4f46e5"/>
+  <text x="200" y="93" font-family="Arial" font-size="9" fill="white" font-weight="bold" text-anchor="middle">ASSIGNMENT</text>
+
+  <!-- Paper lines -->
+  <rect x="155" y="118" width="90" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="155" y="131" width="75" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="155" y="143" width="85" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="155" y="155" width="60" height="5" rx="2" fill="#e2e8f0"/>
+
+  <!-- Checkbox items -->
+  <rect x="155" y="170" width="11" height="11" rx="2" fill="white" stroke="#c7d2fe" stroke-width="1.5"/>
+  <rect x="171" y="172" width="55" height="5" rx="2" fill="#e2e8f0"/>
+  <rect x="155" y="188" width="11" height="11" rx="2" fill="#4f46e5"/>
+  <polyline points="158,194 161,197 164,191" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="171" y="190" width="45" height="5" rx="2" fill="#e2e8f0"/>
+
+  <!-- Due date chip -->
+  <rect x="155" y="207" width="70" height="14" rx="7" fill="#fef9c3"/>
+  <text x="190" y="217" font-family="Arial" font-size="7" fill="#92400e" text-anchor="middle">📅 Due: Friday</text>
+
+  <!-- Pencil -->
+  <g transform="rotate(35, 290, 180)">
+    <!-- Eraser -->
+    <rect x="276" y="100" width="18" height="14" rx="2" fill="#fca5a5"/>
+    <rect x="276" y="113" width="18" height="3" fill="#e5e7eb"/>
+    <!-- Pencil body -->
+    <rect x="276" y="116" width="18" height="90" fill="url(#pencilTop)"/>
+    <!-- Pencil stripe -->
+    <rect x="276" y="128" width="18" height="6" fill="rgba(0,0,0,0.08)"/>
+    <!-- Pencil tip wood -->
+    <polygon points="276,206 294,206 285,228" fill="#fde68a"/>
+    <!-- Pencil tip graphite -->
+    <polygon points="280,220 290,220 285,228" fill="#374151"/>
+  </g>
+
+  <!-- Sparkles -->
+  <text x="85" y="100" font-size="18" opacity="0.5">✏️</text>
+  <text x="315" y="90" font-size="14" opacity="0.5">📌</text>
+  <text x="100" y="210" font-size="12" opacity="0.4">💡</text>
+
+  <!-- Text -->
+  <text x="200" y="258" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#4f46e5" text-anchor="middle">No Assignments Yet</text>
+  <text x="200" y="276" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Assignments posted by your teacher will appear here</text>
+</svg>

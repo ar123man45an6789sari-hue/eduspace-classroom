@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EduSpace - Your complete digital classroom management system">
+    <title>{% block title %}EduSpace{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/forms.js' %}" defer></script>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% if user.is_authenticated %}app-body{% else %}public-body{% endif %}">
+{% if user.is_authenticated %}
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="{% static 'images/logo.svg' %}" alt="EduSpace" class="logo-img">
+    </div>
+    <nav class="sidebar-nav">
+        {% if user.profile.role == 'teacher' %}
+            <a href="{% url 'teacher_dashboard' %}" class="nav-item {% if request.resolver_match.url_name == 'teacher_dashboard' %}active{% endif %}">
+                <i class="fas fa-th-large"></i><span>Dashboard</span>
+            </a>
+            <a href="{% url 'create_classroom' %}" class="nav-item {% if request.resolver_match.url_name == 'create_classroom' %}active{% endif %}">
+                <i class="fas fa-plus-circle"></i><span>New Class</span>
+            </a>
+            <a href="{% url 'ai_assistant:assignment_generator' %}" class="nav-item {% if request.resolver_match.url_name == 'assignment_generator' %}active{% endif %}">
+                <i class="fas fa-wand-magic-sparkles"></i><span>AI Assignment</span>
+            </a>
+            <a href="{% url 'ai_assistant:material_summarizer' %}" class="nav-item {% if request.resolver_match.url_name == 'material_summarizer' %}active{% endif %}">
+                <i class="fas fa-file-lines"></i><span>AI Materials</span>
+            </a>
+            <a href="{% url 'ai_assistant:quiz_generator' %}" class="nav-item {% if request.resolver_match.url_name == 'quiz_generator' %}active{% endif %}">
+                <i class="fas fa-circle-question"></i><span>AI Quiz</span>
+            </a>
+        {% else %}
+            <a href="{% url 'student_dashboard' %}" class="nav-item {% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}">
+                <i class="fas fa-th-large"></i><span>Dashboard</span>
+            </a>
+            <a href="{% url 'join_classroom' %}" class="nav-item {% if request.resolver_match.url_name == 'join_classroom' %}active{% endif %}">
+                <i class="fas fa-sign-in-alt"></i><span>Join Class</span>
+            </a>
+            <a href="{% url 'my_submissions' %}" class="nav-item {% if request.resolver_match.url_name == 'my_submissions' %}active{% endif %}">
+                <i class="fas fa-file-upload"></i><span>My Work</span>
+            </a>
+            <a href="{% url 'ai_assistant:study_assistant' %}" class="nav-item {% if request.resolver_match.url_name == 'study_assistant' %}active{% endif %}">
+                <i class="fas fa-sparkles"></i><span>Study Assistant</span>
+            </a>
+        {% endif %}
+        <a href="{% url 'profile' %}" class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+            <i class="fas fa-user-circle"></i><span>Profile</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <img src="{% static 'images/avatars/avatar-' %}{{ user.first_name|first|upper }}.svg" alt="avatar" class="avatar-sm" onerror="this.src='{% static 'images/avatars/default-avatar.svg' %}'">
+            <div>
+                <div class="user-name">{{ user.get_full_name|default:user.username }}</div>
+                <div class="user-role">{{ user.profile.role|title }}</div>
+            </div>
+        </div>
+        <a href="{% url 'logout' %}" class="btn-logout" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </div>
+</aside>
+<div class="main-content" id="mainContent">
+    <header class="top-bar">
+        <button class="sidebar-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        <div class="top-bar-title">{% block page_title %}{% endblock %}</div>
+        <div class="top-bar-actions">{% block top_actions %}{% endblock %}</div>
+    </header>
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <i class="fas {% if 'success' in message.tags %}fa-check-circle{% elif 'error' in message.tags %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+            {{ message }}
+            <button class="alert-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <main class="content-area">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% block extra_js %}{% endblock %}
+{% else %}
+<nav class="public-nav">
+    <div class="nav-brand">
+        <img src="{% static 'images/logo.svg' %}" alt="EduSpace" height="36">
+    </div>
+    <div class="nav-links">
+        <a href="{% url 'login' %}" class="btn btn-ghost">Sign In</a>
+        <a href="{% url 'register' %}" class="btn btn-primary">Get Started</a>
+    </div>
+</nav>
+{% if messages %}
+<div class="messages-container top-messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        <i class="fas {% if 'success' in message.tags %}fa-check-circle{% elif 'error' in message.tags %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+        {{ message }}
+        <button class="alert-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% block public_content %}{% endblock %}
+{% endif %}
+<script>
+const toggle = document.getElementById('sidebarToggle');
+const sidebar = document.getElementById('sidebar');
+const main = document.getElementById('mainContent');
+if (toggle && sidebar) {
+    toggle.addEventListener('click', function() {
+        sidebar.classList.toggle('open');
+        if (main) main.classList.toggle('sidebar-collapsed');
+    });
+}
+
+if (window.innerWidth <= 768) {
+    document.addEventListener('click', function(e) {
+        if (sidebar && sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+}
+
+setTimeout(function() {
+    document.querySelectorAll('.alert').forEach(function(a) {
+        a.style.opacity = '0';
+        setTimeout(function() { a.remove(); }, 400);
+    });
+}, 5000);
+</script>
+</body>
+</html>

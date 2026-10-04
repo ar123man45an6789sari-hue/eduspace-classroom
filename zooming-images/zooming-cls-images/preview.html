@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZoomingCLS — Image Assets Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #1e293b; }
+    header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 32px 40px; }
+    header h1 { font-size: 2rem; font-weight: 800; }
+    header p { opacity: 0.8; margin-top: 6px; }
+    .content { padding: 40px; max-width: 1100px; margin: 0 auto; }
+    section { margin-bottom: 48px; }
+    h2 { font-size: 1.2rem; font-weight: 700; color: #4f46e5; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #e0e7ff; }
+    .grid { display: grid; gap: 20px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .grid-6 { grid-template-columns: repeat(6, 1fr); }
+    .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+    .card img, .card object { width: 100%; display: block; }
+    .card-label { padding: 10px 14px; font-size: .8rem; color: #64748b; font-weight: 500; border-top: 1px solid #f1f5f9; background: #fafafa; }
+    .card-label code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-size: .75rem; color: #4f46e5; }
+    .avatar-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .avatar-item { text-align: center; }
+    .avatar-item img { width: 50px; height: 50px; border-radius: 50%; display: block; }
+    .avatar-item span { font-size: .65rem; color: #94a3b8; display: block; margin-top: 3px; }
+    .install-box { background: #1e293b; color: #e2e8f0; border-radius: 12px; padding: 24px 28px; font-family: monospace; font-size: .9rem; line-height: 1.8; }
+    .install-box .comment { color: #64748b; }
+    .install-box .path { color: #38bdf8; }
+    .install-box .cmd { color: #86efac; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>📹 ZoomingCLS — Image Assets</h1>
+  <p>All custom SVG images for your classroom management system — 40+ files, ready to use</p>
+</header>
+
+<div class="content">
+
+  <section>
+    <h2>🎨 Logo & Favicon</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <div style="padding:20px;background:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:80px;">
+          <img src="logo.svg" style="width:200px;height:50px;" alt="Logo">
+        </div>
+        <div class="card-label">Logo — <code>logo.svg</code></div>
+      </div>
+      <div class="card">
+        <div style="padding:20px;background:#f8fafc;display:flex;align-items:center;justify-content:center;gap:20px;min-height:80px;">
+          <img src="favicon.svg" style="width:32px;height:32px;" alt="Favicon 32">
+          <img src="favicon.svg" style="width:48px;height:48px;" alt="Favicon 48">
+          <img src="favicon.svg" style="width:64px;height:64px;" alt="Favicon 64">
+        </div>
+        <div class="card-label">Favicon (scales to any size) — <code>favicon.svg</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🖼️ Hero & Login Illustrations</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <img src="illustrations/hero.svg" alt="Hero">
+        <div class="card-label">Hero illustration (dashboard/landing) — <code>illustrations/hero.svg</code></div>
+      </div>
+      <div class="card">
+        <img src="illustrations/login-side.svg" alt="Login Side" style="max-height:300px;object-fit:contain;">
+        <div class="card-label">Login page side panel — <code>illustrations/login-side.svg</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🗒️ Empty State Illustrations</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <img src="illustrations/empty-classrooms.svg" alt="No Classrooms">
+        <div class="card-label">No classrooms — <code>illustrations/empty-classrooms.svg</code></div>
+      </div>
+      <div class="card">
+        <img src="illustrations/empty-assignments.svg" alt="No Assignments">
+        <div class="card-label">No assignments — <code>illustrations/empty-assignments.svg</code></div>
+      </div>
+      <div class="card">
+        <img src="illustrations/empty-meetings.svg" alt="No Meetings">
+        <div class="card-label">No meetings — <code>illustrations/empty-meetings.svg</code></div>
+      </div>
+      <div class="card">
+        <img src="illustrations/empty-stream.svg" alt="Empty Stream">
+        <div class="card-label">Empty stream — <code>illustrations/empty-stream.svg</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>✅ Success / Action Illustrations</h2>
+    <div class="grid grid-2" style="max-width:500px;">
+      <div class="card">
+        <img src="illustrations/submitted.svg" alt="Submitted">
+        <div class="card-label">Assignment submitted — <code>illustrations/submitted.svg</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎨 Classroom Banner Images</h2>
+    <div class="grid grid-3">
+      <div class="card"><img src="banners/banner-indigo.svg" alt="Indigo"><div class="card-label"><code>banner-indigo.svg</code></div></div>
+      <div class="card"><img src="banners/banner-blue.svg" alt="Blue"><div class="card-label"><code>banner-blue.svg</code></div></div>
+      <div class="card"><img src="banners/banner-green.svg" alt="Green"><div class="card-label"><code>banner-green.svg</code></div></div>
+      <div class="card"><img src="banners/banner-purple.svg" alt="Purple"><div class="card-label"><code>banner-purple.svg</code></div></div>
+      <div class="card"><img src="banners/banner-red.svg" alt="Red"><div class="card-label"><code>banner-red.svg</code></div></div>
+      <div class="card"><img src="banners/banner-orange.svg" alt="Orange"><div class="card-label"><code>banner-orange.svg</code></div></div>
+      <div class="card"><img src="banners/banner-teal.svg" alt="Teal"><div class="card-label"><code>banner-teal.svg</code></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>👤 Auto-Generated Letter Avatars (A–Z)</h2>
+    <div class="avatar-grid">
+      <div class="avatar-item"><img src="avatars/avatar-A.svg" alt="A"><span>A</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-B.svg" alt="B"><span>B</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-C.svg" alt="C"><span>C</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-D.svg" alt="D"><span>D</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-E.svg" alt="E"><span>E</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-F.svg" alt="F"><span>F</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-G.svg" alt="G"><span>G</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-H.svg" alt="H"><span>H</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-I.svg" alt="I"><span>I</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-J.svg" alt="J"><span>J</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-K.svg" alt="K"><span>K</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-L.svg" alt="L"><span>L</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-M.svg" alt="M"><span>M</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-N.svg" alt="N"><span>N</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-O.svg" alt="O"><span>O</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-P.svg" alt="P"><span>P</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-Q.svg" alt="Q"><span>Q</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-R.svg" alt="R"><span>R</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-S.svg" alt="S"><span>S</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-T.svg" alt="T"><span>T</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-U.svg" alt="U"><span>U</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-V.svg" alt="V"><span>V</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-W.svg" alt="W"><span>W</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-X.svg" alt="X"><span>X</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-Y.svg" alt="Y"><span>Y</span></div>
+      <div class="avatar-item"><img src="avatars/avatar-Z.svg" alt="Z"><span>Z</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>⚙️ How to Use in Your Django Project</h2>
+    <div class="install-box">
+      <span class="comment"># 1. Copy entire images folder into your static directory</span><br>
+      <span class="cmd">cp -r zooming-cls-images/* zooming-cls/static/images/</span><br><br>
+      <span class="comment"># 2. In your Django templates, load static and use like:</span><br>
+      <span class="path">{% load static %}</span><br><br>
+      <span class="comment"># Logo in base.html sidebar:</span><br>
+      <span class="path">&lt;img src="{% static 'images/logo.svg' %}" alt="ZoomingCLS" height="40"&gt;</span><br><br>
+      <span class="comment"># Empty state in dashboard.html:</span><br>
+      <span class="path">&lt;img src="{% static 'images/illustrations/empty-classrooms.svg' %}" width="280"&gt;</span><br><br>
+      <span class="comment"># Auto avatar by username first letter in profile:</span><br>
+      <span class="path">&lt;img src="{% static 'images/avatars/avatar-'|add:user.username.0.upper|add:'.svg' %}" width="40"&gt;</span><br><br>
+      <span class="comment"># Favicon in base.html &lt;head&gt;:</span><br>
+      <span class="path">&lt;link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}"&gt;</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

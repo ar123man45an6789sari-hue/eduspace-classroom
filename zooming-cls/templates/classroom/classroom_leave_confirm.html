@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Leave Classroom{% endblock %}
+{% block topbar_title %}Leave Classroom{% endblock %}
+{% block content %}
+<div style="max-width:480px;margin:0 auto;text-align:center;padding-top:40px;">
+  <div style="font-size:3rem;margin-bottom:16px;">🚪</div>
+  <h2 class="font-bold mb-8">Leave "{{ classroom.name }}"?</h2>
+  <p class="text-muted mb-24">You will lose access to all posts, assignments, and meetings in this classroom. You can rejoin later with the class code.</p>
+  <form method="post" style="display:inline-flex;gap:10px;">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit"><i class="fa-solid fa-right-from-bracket"></i> Leave Classroom</button>
+    <a href="{% url 'classroom_detail' classroom.pk %}" class="btn btn-outline">Cancel</a>
+  </form>
+</div>
+{% endblock %}

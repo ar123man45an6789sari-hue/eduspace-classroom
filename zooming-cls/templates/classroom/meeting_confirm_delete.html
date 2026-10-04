@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Delete Meeting{% endblock %}
+{% block topbar_title %}Delete Meeting{% endblock %}
+{% block content %}
+<div style="max-width:480px;margin:0 auto;text-align:center;padding-top:40px;">
+  <div style="font-size:3rem;margin-bottom:16px;">🗑️</div>
+  <h2 class="font-bold mb-8">Delete "{{ meeting.title }}"?</h2>
+  <p class="text-muted mb-24">Students will no longer be able to see this meeting.</p>
+  <form method="post" style="display:inline-flex;gap:10px;">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Yes, Delete</button>
+    <a href="{% url 'meeting_list' meeting.classroom.pk %}" class="btn btn-outline">Cancel</a>
+  </form>
+</div>
+{% endblock %}

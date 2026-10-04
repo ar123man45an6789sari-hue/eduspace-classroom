@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="msgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="msgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9"/>
+      <stop offset="100%" style="stop-color:#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="130" r="100" fill="#f0fdf4" opacity="0.7"/>
+
+  <!-- Shadow -->
+  <ellipse cx="200" cy="228" rx="80" ry="10" fill="#e2e8f0" opacity="0.4"/>
+
+  <!-- Message bubble 1 (teacher - right aligned) -->
+  <rect x="195" y="68" width="130" height="55" rx="12" fill="url(#msgGrad1)" filter="drop-shadow(0 4px 10px rgba(79,70,229,0.25))"/>
+  <polygon points="195,90 185,97 195,97" fill="#4f46e5"/>
+  <rect x="206" y="80" width="80" height="7" rx="3" fill="rgba(255,255,255,0.9)"/>
+  <rect x="206" y="93" width="100" height="6" rx="3" fill="rgba(255,255,255,0.5)"/>
+  <rect x="206" y="106" width="70" height="6" rx="3" fill="rgba(255,255,255,0.5)"/>
+  <!-- Teacher avatar -->
+  <circle cx="178" cy="85" r="18" fill="#fde68a" stroke="white" stroke-width="2"/>
+  <ellipse cx="178" cy="73" rx="18" ry="8" fill="#92400e"/>
+  <!-- Teacher tag -->
+  <rect x="162" y="107" width="34" height="12" rx="6" fill="#4f46e5"/>
+  <text x="179" y="116" font-family="Arial" font-size="6" fill="white" text-anchor="middle" font-weight="bold">Teacher</text>
+
+  <!-- Message bubble 2 (student - left) -->
+  <rect x="75" y="138" width="120" height="48" rx="12" fill="url(#msgGrad2)" filter="drop-shadow(0 4px 10px rgba(14,165,233,0.2))"/>
+  <polygon points="195,158 205,165 195,165" fill="#0ea5e9"/>
+  <rect x="85" y="149" width="85" height="6" rx="3" fill="rgba(255,255,255,0.9)"/>
+  <rect x="85" y="161" width="70" height="5" rx="2" fill="rgba(255,255,255,0.5)"/>
+  <rect x="85" y="172" width="50" height="5" rx="2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Student avatar -->
+  <circle cx="216" cy="155" r="16" fill="#bbf7d0" stroke="white" stroke-width="2"/>
+  <ellipse cx="216" cy="144" rx="16" ry="7" fill="#374151"/>
+  <!-- Student tag -->
+  <rect x="200" y="175" width="34" height="12" rx="6" fill="#0ea5e9"/>
+  <text x="217" y="184" font-family="Arial" font-size="6" fill="white" text-anchor="middle" font-weight="bold">Student</text>
+
+  <!-- Floating emoji reactions -->
+  <circle cx="145" cy="105" r="14" fill="white" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.1))"/>
+  <text x="145" y="110" font-size="14" text-anchor="middle">👍</text>
+
+  <circle cx="285" cy="148" r="14" fill="white" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.1))"/>
+  <text x="285" y="153" font-size="14" text-anchor="middle">🎉</text>
+
+  <circle cx="105" cy="200" r="14" fill="white" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.1))"/>
+  <text x="105" y="205" font-size="14" text-anchor="middle">❓</text>
+
+  <!-- Typing indicator -->
+  <rect x="145" y="200" width="75" height="26" rx="13" fill="white" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.08))"/>
+  <circle cx="165" cy="213" r="4" fill="#c7d2fe"/>
+  <circle cx="181" cy="213" r="4" fill="#a5b4fc"/>
+  <circle cx="197" cy="213" r="4" fill="#818cf8"/>
+
+  <!-- Notification bell -->
+  <circle cx="315" cy="80" r="22" fill="#fef9c3" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.1))"/>
+  <text x="315" y="87" font-size="20" text-anchor="middle">🔔</text>
+  <circle cx="328" cy="66" r="7" fill="#ef4444"/>
+  <text x="328" y="70" font-family="Arial" font-size="8" fill="white" text-anchor="middle" font-weight="bold">3</text>
+
+  <!-- Text -->
+  <text x="200" y="258" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#4f46e5" text-anchor="middle">Stream is Empty</text>
+  <text x="200" y="276" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Announcements and posts will appear here</text>
+</svg>

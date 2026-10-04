@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Profile – EduSpace{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block content %}
+<div class="profile-container" style="max-width:800px; margin:0 auto; display:flex; flex-direction:column; gap:32px;">
+    
+    <!-- Profile Header Card -->
+    <div class="card profile-header-card" style="display:flex; align-items:center; gap:32px; padding:40px;">
+        {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="avatar" class="avatar-lg" style="width:120px; height:120px;">
+        {% else %}
+        <div class="avatar-placeholder-lg" style="width:120px; height:120px; font-size:2.5rem;">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</div>
+        {% endif %}
+        
+        <div class="profile-info" style="flex:1;">
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px;">
+                <h2 style="font-size:2rem; font-weight:800; letter-spacing:-0.03em;">{{ user.get_full_name|default:user.username }}</h2>
+                <span class="badge {% if profile.role == 'teacher' %}badge-sky{% else %}badge-green{% endif %}">
+                    <i class="fas {% if profile.role == 'teacher' %}fa-chalkboard-teacher{% else %}fa-user-graduate{% endif %}"></i>
+                    {{ profile.role|title }}
+                </span>
+            </div>
+            
+            <div style="display:flex; align-items:center; gap:24px; color:var(--text-secondary); margin-bottom:16px; font-weight:500;">
+                <span><i class="fas fa-envelope" style="color:var(--accent); margin-right:6px;"></i> {{ user.email }}</span>
+                <span><i class="fas fa-calendar-alt" style="color:var(--accent); margin-right:6px;"></i> Joined {{ user.date_joined|date:"M Y" }}</span>
+            </div>
+            
+            {% if profile.bio %}
+            <p style="color:var(--text-primary); font-size:1.05rem; line-height:1.6; background:var(--bg-primary); padding:16px 20px; border-radius:var(--radius-sm); border:1px solid var(--border-solid);">
+                {{ profile.bio }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <div class="card">
+        <div class="card-header" style="margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+            <h3 class="card-title" style="font-size:1.4rem; font-weight:700;"><i class="fas fa-user-edit" style="color:var(--accent); margin-right:8px;"></i> Edit Profile Details</h3>
+            <p style="color:var(--text-secondary); margin-top:4px;">Update your personal information and biography.</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:24px; margin-bottom:24px;">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" value="{{ form.first_name.value|default:user.first_name }}">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" value="{{ form.last_name.value|default:user.last_name }}">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" value="{{ form.email.value|default:user.email }}">
+            </div>
+            
+            <div class="form-group">
+                <label>Biography</label>
+                <textarea name="bio" rows="4" placeholder="Tell your students or teachers a little about yourself...">{{ form.bio.value|default:profile.bio }}</textarea>
+            </div>
+            
+            <div class="form-group" style="background:var(--bg-primary); padding:20px; border-radius:var(--radius-sm); border:1px dashed var(--border-solid);">
+                <label><i class="fas fa-camera" style="margin-right:6px; color:var(--text-secondary);"></i> Update Profile Photo</label>
+                <input type="file" name="avatar" accept="image/*" style="background:transparent; border:none; padding:8px 0; box-shadow:none;">
+                {% if profile.avatar %}<p class="help-text" style="font-size:0.85rem; color:var(--text-secondary); margin-top:8px;">Current: {{ profile.avatar.name }}</p>{% endif %}
+            </div>
+            
+            <div style="display:flex; justify-content:flex-end; margin-top:32px;">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

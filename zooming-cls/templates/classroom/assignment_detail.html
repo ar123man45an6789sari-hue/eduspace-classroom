@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block title %}{{ assignment.title }} — ZoomingCLS{% endblock %}
+{% block topbar_title %}{{ assignment.title }}{% endblock %}
+{% block topbar_actions %}
+  <a href="{% url 'assignment_list' classroom.pk %}" class="btn btn-outline btn-sm">← Assignments</a>
+  {% if is_teacher %}
+  <a href="{% url 'assignment_delete' assignment.pk %}" class="btn btn-danger btn-sm">
+    <i class="fa-solid fa-trash"></i> Delete
+  </a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div style="display:flex;gap:24px;align-items:flex-start;">
+  <div style="flex:1;min-width:0;">
+
+    <!-- Assignment info card -->
+    <div class="card mb-16">
+      <div class="card-body">
+        <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:8px;">{{ assignment.title }}</h2>
+        <div class="flex gap-12 mb-16" style="flex-wrap:wrap;">
+          <span class="text-sm text-muted">
+            <i class="fa-solid fa-star"></i> {{ assignment.total_marks }} marks
+          </span>
+          {% if assignment.due_date %}
+          <span class="text-sm text-muted">
+            <i class="fa-solid fa-clock"></i>
+            Due {{ assignment.due_date|date:"M d, Y — g:i A" }}
+            {% if assignment.is_overdue %}
+              <span class="badge badge-danger">Overdue</span>
+            {% endif %}
+          </span>
+          {% endif %}
+          <span class="text-sm text-muted">
+            <i class="fa-solid fa-calendar"></i> Posted {{ assignment.created_at|date:"M d, Y" }}
+          </span>
+        </div>
+        {% if assignment.description %}
+        <p style="font-size:.95rem;line-height:1.7;white-space:pre-wrap;">{{ assignment.description }}</p>
+        {% endif %}
+
+        {% if assignment.attachments.all %}
+        <div class="mt-16">
+          <div class="text-xs text-muted mb-8">Attachments</div>
+          <div class="post-attachments" style="padding:0;">
+            {% for att in assignment.attachments.all %}
+            <a href="{{ att.file.url }}" class="attachment-chip" target="_blank">
+              <i class="fa-solid fa-file"></i> {{ att.name }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Student: submit form -->
+    {% if not is_teacher %}
+      {% if my_submission %}
+      <div class="card mb-16">
+        <div class="card-header">Your Submission</div>
+        <div class="card-body">
+          <div class="flex gap-8 mb-8">
+            <span class="badge
+              {% if my_submission.status == 'graded' %}badge-success
+              {% elif my_submission.status == 'late' %}badge-warning
+              {% else %}badge-primary{% endif %}">
+              {{ my_submission.get_status_display }}
+            </span>
+            <span class="text-xs text-muted">Submitted {{ my_submission.submitted_at|timesince }} ago</span>
+          </div>
+          {% if my_submission.text_answer %}
+          <p class="text-sm mb-8" style="white-space:pre-wrap;">{{ my_submission.text_answer }}</p>
+          {% endif %}
+          {% if my_submission.file %}
+          <a href="{{ my_submission.file.url }}" class="attachment-chip" target="_blank">
+            <i class="fa-solid fa-file"></i> Your submitted file
+          </a>
+          {% endif %}
+          {% if my_submission.status == 'graded' %}
+          <hr class="divider">
+          <div class="text-sm font-medium mb-4">
+            Score: <span style="color:var(--primary);font-size:1.1rem;">{{ my_submission.marks }}</span> / {{ assignment.total_marks }}
+          </div>
+          {% if my_submission.feedback %}
+          <div style="background:var(--bg);border-radius:8px;padding:12px;font-size:.9rem;">
+            <div class="text-xs text-muted mb-4">Teacher feedback</div>
+            {{ my_submission.feedback }}
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="card mb-16">
+        <div class="card-header">Submit Your Work</div>
+        <div class="card-body">
+          <form method="post" action="{% url 'assignment_submit' assignment.pk %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label class="form-label">Written Answer</label>
+              <textarea name="text_answer" rows="5" class="form-control"
+                placeholder="Type your answer here... (optional if attaching a file)"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Attach a File (optional)</label>
+              <input type="file" name="file" class="form-control">
+            </div>
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-paper-plane"></i>
+              {% if assignment.is_overdue %}Submit (Late){% else %}Submit Assignment{% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    {% endif %}
+
+    <!-- Teacher: submissions list -->
+    {% if is_teacher %}
+    <div class="card">
+      <div class="card-header">
+        Submissions — {{ all_submissions.count }} / {{ classroom.get_student_count }}
+      </div>
+      {% if all_submissions %}
+      {% for sub in all_submissions %}
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);">
+        <div class="flex-between mb-8">
+          <div class="flex gap-8" style="align-items:center;">
+            <div class="avatar" style="width:32px;height:32px;font-size:.8rem;">{{ sub.student.username|first|upper }}</div>
+            <div>
+              <div class="font-medium text-sm">{{ sub.student.get_full_name|default:sub.student.username }}</div>
+              <div class="text-xs text-muted">{{ sub.submitted_at|timesince }} ago</div>
+            </div>
+          </div>
+          <span class="badge
+            {% if sub.status == 'graded' %}badge-success
+            {% elif sub.status == 'late' %}badge-warning
+            {% else %}badge-primary{% endif %}">
+            {{ sub.get_status_display }}
+            {% if sub.status == 'graded' %}— {{ sub.marks }}/{{ assignment.total_marks }}{% endif %}
+          </span>
+        </div>
+
+        {% if sub.text_answer %}
+        <div style="background:var(--bg);border-radius:8px;padding:10px 12px;font-size:.85rem;margin-bottom:10px;white-space:pre-wrap;">{{ sub.text_answer }}</div>
+        {% endif %}
+        {% if sub.file %}
+        <a href="{{ sub.file.url }}" class="attachment-chip text-xs mb-8" target="_blank">
+          <i class="fa-solid fa-file"></i> Submitted file
+        </a>
+        {% endif %}
+
+        <!-- Grade form -->
+        <form method="post" action="{% url 'assignment_grade' sub.pk %}" style="margin-top:10px;background:var(--primary-light);border-radius:8px;padding:12px;">
+          {% csrf_token %}
+          <div class="grid-2" style="gap:10px;margin-bottom:10px;">
+            <div>
+              <label class="form-label text-xs">Marks (out of {{ assignment.total_marks }})</label>
+              <input type="number" name="{{ sub.pk }}-marks" min="0" max="{{ assignment.total_marks }}"
+                class="form-control" value="{{ sub.marks|default:'' }}" placeholder="0–{{ assignment.total_marks }}">
+            </div>
+            <div>
+              <label class="form-label text-xs">Feedback</label>
+              <input type="text" name="{{ sub.pk }}-feedback" class="form-control"
+                value="{{ sub.feedback }}" placeholder="Optional feedback...">
+            </div>
+          </div>
+          <button class="btn btn-success btn-sm" type="submit">
+            <i class="fa-solid fa-check"></i>
+            {% if sub.status == 'graded' %}Update Grade{% else %}Grade{% endif %}
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="empty-state">
+        <div class="icon">📬</div>
+        <p>No submissions yet.</p>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

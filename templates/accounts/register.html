@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Create Account - EduSpace{% endblock %}
+{% block public_content %}
+<div class="auth-page">
+    <div class="auth-shell auth-shell-register">
+        <section class="auth-intro">
+            <img src="{% static 'images/logo.svg' %}" alt="EduSpace" class="auth-brand-logo">
+            <div class="auth-intro-copy">
+                <span class="auth-eyebrow">Start your journey</span>
+                <h1>A better way to learn together.</h1>
+                <p>Create your space for meaningful teaching, learning, and progress.</p>
+            </div>
+            <div class="auth-benefits">
+                <span><i class="fas fa-check"></i> Organize every class</span>
+                <span><i class="fas fa-check"></i> Track meaningful progress</span>
+                <span><i class="fas fa-check"></i> Stay connected</span>
+            </div>
+        </section>
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+                <h2>Create your account</h2>
+                <p class="subtitle">Join EduSpace and make your next class count.</p>
+            </div>
+            <form method="post" novalidate autocomplete="on">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="id_first_name">First name</label>
+                        <input id="id_first_name" type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" placeholder="First name" autocomplete="given-name" required>
+                        {% for e in form.first_name.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_last_name">Last name</label>
+                        <input id="id_last_name" type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" placeholder="Last name" autocomplete="family-name" required>
+                        {% for e in form.last_name.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_register_username">Username</label>
+                    <input id="id_register_username" type="text" name="username" value="{{ form.username.value|default:'' }}" placeholder="Choose a username" autocomplete="username" required>
+                    {% for e in form.username.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email address</label>
+                    <input id="id_email" type="email" name="email" value="{{ form.email.value|default:'' }}" placeholder="you@example.com" autocomplete="email" required>
+                    {% for e in form.email.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <span class="form-label">I am joining as</span>
+                    <div class="role-selector">
+                        <label class="role-option"><input type="radio" name="role" value="teacher" {% if form.role.value == 'teacher' %}checked{% endif %}><span class="role-card"><i class="fas fa-chalkboard-teacher"></i> Teacher</span></label>
+                        <label class="role-option"><input type="radio" name="role" value="student" {% if form.role.value != 'teacher' %}checked{% endif %}><span class="role-card"><i class="fas fa-user-graduate"></i> Student</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_password1">Password</label>
+                    <input id="id_password1" type="password" name="password1" placeholder="Create a password" autocomplete="new-password" required>
+                    {% for e in form.password1.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <div class="form-group">
+                    <label for="id_password2">Confirm password</label>
+                    <input id="id_password2" type="password" name="password2" placeholder="Repeat your password" autocomplete="new-password" required>
+                    {% for e in form.password2.errors %}<div class="field-error">{{ e }}</div>{% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> Create Account</button>
+            </form>
+            <div class="auth-link">Already have an account? <a href="{% url 'login' %}">Sign In</a></div>
+            </section>
+            </div>
+</div>
+{% endblock %}

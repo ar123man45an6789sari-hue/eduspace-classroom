@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" width="480" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.18)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0.06)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="600" fill="url(#bg)"/>
+
+  <!-- Background circles decoration -->
+  <circle cx="400" cy="80" r="180" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="80" cy="500" r="160" fill="rgba(255,255,255,0.04)"/>
+  <circle cx="450" cy="450" r="100" fill="rgba(255,255,255,0.03)"/>
+
+  <!-- Floating card 1 - Assignment -->
+  <rect x="40" y="80" width="180" height="90" rx="14" fill="url(#card1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <rect x="40" y="80" width="180" height="28" rx="14" fill="rgba(255,255,255,0.12)"/>
+  <rect x="40" y="96" width="180" height="12" fill="rgba(255,255,255,0.12)"/>
+  <text x="55" y="98" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.9)" font-weight="bold">📝 New Assignment Posted</text>
+  <rect x="55" y="118" width="120" height="6" rx="3" fill="rgba(255,255,255,0.3)"/>
+  <rect x="55" y="130" width="90" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="55" y="141" width="100" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="55" y="155" width="60" height="14" rx="7" fill="rgba(255,255,255,0.25)"/>
+  <text x="85" y="165" font-family="Arial" font-size="7" fill="white" text-anchor="middle">View Now</text>
+
+  <!-- Floating card 2 - Meeting -->
+  <rect x="260" y="130" width="175" height="80" rx="14" fill="url(#card1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <rect x="260" y="130" width="175" height="26" rx="14" fill="rgba(255,255,255,0.12)"/>
+  <rect x="260" y="144" width="175" height="12" fill="rgba(255,255,255,0.12)"/>
+  <text x="275" y="147" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.9)" font-weight="bold">📹 Live Meeting — 3:00 PM</text>
+  <rect x="275" y="168" width="100" height="5" rx="2" fill="rgba(255,255,255,0.3)"/>
+  <rect x="275" y="178" width="80" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="415" cy="172" r="14" fill="rgba(255,255,255,0.2)"/>
+  <text x="415" y="177" font-size="13" text-anchor="middle">🔴</text>
+
+  <!-- Center illustration: teacher at screen -->
+  <rect x="100" y="230" width="280" height="170" rx="14" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+  <!-- Screen inside card -->
+  <rect x="118" y="244" width="245" height="130" rx="8" fill="#0f172a"/>
+  <!-- Video grid in screen -->
+  <rect x="122" y="248" width="115" height="55" rx="4" fill="#1e3a5f"/>
+  <circle cx="180" cy="265" r="15" fill="#3b82f6"/>
+  <circle cx="180" cy="265" r="9" fill="#93c5fd"/>
+  <text x="128" y="295" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.5)">Ms. Johnson</text>
+
+  <rect x="244" y="248" width="115" height="55" rx="4" fill="#14532d"/>
+  <circle cx="302" cy="265" r="15" fill="#22c55e"/>
+  <circle cx="302" cy="265" r="9" fill="#86efac"/>
+  <text x="250" y="295" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.5)">Ahmed K.</text>
+
+  <rect x="122" y="310" width="115" height="55" rx="4" fill="#4c1d95"/>
+  <circle cx="180" cy="328" r="15" fill="#8b5cf6"/>
+  <circle cx="180" cy="328" r="9" fill="#c4b5fd"/>
+  <text x="128" y="358" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.5)">Priya S.</text>
+
+  <rect x="244" y="310" width="115" height="55" rx="4" fill="#7c2d12"/>
+  <circle cx="302" cy="328" r="15" fill="#f97316"/>
+  <circle cx="302" cy="328" r="9" fill="#fdba74"/>
+  <text x="250" y="358" font-family="Arial" font-size="7" fill="rgba(255,255,255,0.5)">You</text>
+
+  <!-- Floating card 3 - Grade -->
+  <rect x="55" y="420" width="160" height="75" rx="14" fill="url(#card1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="75" y="445" font-size="24">🎓</text>
+  <rect x="108" y="430" width="90" height="7" rx="3" fill="rgba(255,255,255,0.4)"/>
+  <rect x="108" y="443" width="75" height="5" rx="2" fill="rgba(255,255,255,0.25)"/>
+  <rect x="75" y="458" width="120" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+  <rect x="75" y="469" width="90" height="5" rx="2" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- Floating card 4 - Score -->
+  <rect x="265" y="430" width="150" height="75" rx="14" fill="url(#card1)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <text x="280" y="453" font-family="Arial" font-size="11" fill="rgba(255,255,255,0.7)" font-weight="bold">Assignment Grade</text>
+  <text x="280" y="478" font-family="Arial" font-size="28" fill="white" font-weight="900">95</text>
+  <text x="318" y="478" font-family="Arial" font-size="14" fill="rgba(255,255,255,0.5)">/100</text>
+  <text x="280" y="494" font-family="Arial" font-size="9" fill="rgba(255,255,255,0.5)">Excellent Work! ✨</text>
+
+  <!-- Bottom text -->
+  <text x="240" y="558" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="white" text-anchor="middle">ZoomingCLS</text>
+  <text x="240" y="580" font-family="Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">Your complete digital classroom</text>
+</svg>

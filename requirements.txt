@@ -1,0 +1,8 @@
+django>=4.2
+pillow
+django-crispy-forms
+crispy-bootstrap5
+google-genai>=1.0.0
+pypdf>=4.2.0
+python-docx>=1.1.0
+python-dotenv>=1.0.1

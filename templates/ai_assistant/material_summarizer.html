@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}AI Material Summarizer - EduSpace{% endblock %}
+{% block page_title %}AI Material Summarizer{% endblock %}
+{% block content %}
+<div class="ai-page-header"><div><span class="ai-eyebrow"><i class="fas fa-file-lines"></i> Teacher workspace</span><h1>Understand material faster</h1><p>Generate a concise study guide from an uploaded PDF, DOCX, or text file.</p></div></div>
+<div class="ai-layout ai-layout-wide">
+    <section class="card ai-form-card"><div class="ai-card-heading"><div class="ai-feature-icon"><i class="fas fa-file-lines"></i></div><div><h2>Choose material</h2><p>Only materials from classrooms you own are available.</p></div></div><form method="post" class="ai-form">{% csrf_token %}{{ form.as_p }}<button class="btn btn-primary" type="submit"><i class="fas fa-wand-magic-sparkles"></i> Summarize material</button></form></section>
+    <section class="card ai-result-card">{% if result %}<div class="ai-result-label"><i class="fas fa-book-open"></i> Study guide{% if selected_material %}<span class="ai-result-context">{{ selected_material.title }}</span>{% endif %}</div>{% if result.summary %}<div class="ai-detail"><strong>Summary</strong><p>{{ result.summary }}</p></div>{% endif %}{% if result.key_concepts %}<div class="ai-detail"><strong>Key concepts</strong><ul>{% for item in result.key_concepts %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}{% if result.important_terms %}<div class="ai-detail"><strong>Important terms</strong><ul>{% for item in result.important_terms %}<li><strong>{{ item.term }}</strong>: {{ item.meaning }}</li>{% endfor %}</ul></div>{% endif %}{% if result.exam_questions %}<div class="ai-detail"><strong>Possible exam questions</strong><ol>{% for item in result.exam_questions %}<li>{{ item }}</li>{% endfor %}</ol></div>{% endif %}{% if result.raw %}<pre class="ai-raw">{{ result.raw }}</pre>{% endif %}{% else %}<div class="ai-placeholder"><i class="fas fa-file-circle-question"></i><h2>Your study guide will appear here</h2><p>Choose one of your uploaded materials to generate a summary.</p></div>{% endif %}</section>
+</div>
+{% endblock %}

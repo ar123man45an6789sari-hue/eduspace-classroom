@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Sign In - EduSpace{% endblock %}
+{% block public_content %}
+<div class="auth-page">
+    <div class="auth-shell auth-shell-login">
+        <section class="auth-intro">
+            <img src="{% static 'images/logo.svg' %}" alt="EduSpace" class="auth-brand-logo">
+            <div class="auth-intro-copy">
+                <span class="auth-eyebrow">Your learning space</span>
+                <h1>Make every class count.</h1>
+                <p>Keep lessons, assignments, and progress in one focused place.</p>
+            </div>
+            <div class="auth-stat"><i class="fas fa-sparkles"></i><span>Learn with clarity. Teach with confidence.</span></div>
+        </section>
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <div class="auth-icon"><i class="fas fa-arrow-right-to-bracket"></i></div>
+                <h2>Welcome back</h2>
+                <p class="subtitle">Sign in to continue to your classroom.</p>
+            </div>
+            <form method="post" novalidate autocomplete="on">
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-error auth-error">
+                    <i class="fas fa-exclamation-circle"></i> Invalid username or password.
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_username"><i class="fas fa-user"></i> Username</label>
+                    <input id="id_username" type="text" name="username" value="{{ form.username.value|default:'' }}" placeholder="Enter your username" autocomplete="username" autofocus required>
+                </div>
+                <div class="form-group">
+                    <label for="id_password"><i class="fas fa-lock"></i> Password</label>
+                    <input id="id_password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+            </form>
+            <div class="auth-link">Don't have an account? <a href="{% url 'register' %}">Create Account</a></div>
+        </section>
+    </div>
+
+{% endblock %}

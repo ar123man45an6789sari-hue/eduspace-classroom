@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}EduSpace - Your Digital Classroom{% endblock %}
+{% block public_content %}
+<div class="public-wrapper">
+    <section class="hero">
+        <h1>Transform Your Learning Experience</h1>
+        <p>A beautifully designed, deeply intuitive platform to manage classrooms, share materials, and connect students. Welcome to the future of education.</p>
+        <div class="hero-cta">
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg"><i class="fas fa-magic"></i> Get Started Free</a>
+            <a href="{% url 'login' %}" class="btn btn-ghost btn-lg">Sign In</a>
+        </div>
+    </section>
+    <section class="features-section">
+        <h2 class="features-title">Everything You Need</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-chalkboard"></i></div>
+                <h3>Virtual Classrooms</h3>
+                <p>Create and manage unlimited classrooms with unique join codes for easy student enrollment.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+                <h3>Assignments &amp; Grading</h3>
+                <p>Create assignments with due dates, receive submissions, and grade student work seamlessly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                <h3>Study Materials</h3>
+                <p>Upload and share documents, presentations, and resources with your class in seconds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-bullhorn"></i></div>
+                <h3>Announcements</h3>
+                <p>Keep your class informed with real-time broadcast announcements and updates.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

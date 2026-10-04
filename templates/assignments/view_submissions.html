@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Submissions – {{ assignment.title }} – EduSpace{% endblock %}
+{% block page_title %}Submissions{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-header-left">
+        <h2>{{ assignment.title }}</h2>
+        <p>{{ assignment.classroom.name }} · Due {{ assignment.due_date|date:"M d, Y H:i" }} · Max {{
+            assignment.max_marks }} marks</p>
+    </div>
+    <a href="{% url 'classroom_detail_teacher' assignment.classroom.pk %}" class="btn btn-ghost btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to Class
+    </a>
+</div>
+
+<div class="stats-row" style="margin-bottom:20px;">
+    <div class="stat-card">
+        <div class="stat-value">{{ submissions.count }}</div>
+        <div class="stat-label">Submitted</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ enrolled_count }}</div>
+        <div class="stat-label">Enrolled</div>
+    </div>
+</div>
+
+<div class="card">
+    {% if submissions %}
+    <div style="overflow-x:auto;">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Submitted</th>
+                    <th>Status</th>
+                    <th>Marks</th>
+                    <th>File</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in submissions %}
+                <tr>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="avatar-placeholder" style="width:32px;height:32px;font-size:.72rem;">{{
+                                sub.student.first_name|first|upper }}{{ sub.student.last_name|first|upper }}</div>
+                            <div>
+                                <div style="font-weight:600;">{{ sub.student.get_full_name|default:sub.student.username
+                                    }}</div>
+                                <div style="font-size:.78rem;color:var(--text-muted);">{{ sub.student.email }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-size:.85rem;">{{ sub.submitted_at|date:"M d, Y H:i" }}</td>
+                    <td>
+                        <span
+                            class="badge {% if sub.status == 'graded' %}badge-green{% elif sub.status == 'late' %}badge-amber{% else %}badge-sky{% endif %}">{{
+                            sub.get_status_display }}</span>
+                    </td>
+                    <td>
+                        {% if sub.marks is not None %}<strong>{{ sub.marks }}/{{ assignment.max_marks }}</strong>{% else
+                        %}—{% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ sub.file.url }}" download class="btn btn-ghost btn-sm"><i
+                                class="fas fa-download"></i> {{ sub.filename }}</a>
+                    </td>
+                    <td>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <a href="{% url 'grade_submission' sub.pk %}" class="btn btn-primary btn-sm"><i
+                                    class="fas fa-star"></i> Grade</a>
+                            <a href="{% url 'ai_assistant:evaluate_submission' sub.pk %}" class="btn btn-ghost btn-sm" title="Get an AI grading suggestion"><i
+                                    class="fas fa-sparkles"></i> AI Review</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>No submissions yet</h3>
+        <p>Students haven't uploaded their work yet</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
