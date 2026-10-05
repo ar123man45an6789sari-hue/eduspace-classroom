@@ -29,3 +29,20 @@ class AIInteraction(models.Model):
 
     def __str__(self):
         return f'{self.feature} by {self.user.username} ({self.status})'
+
+
+class AIResponseCache(models.Model):
+    """Successful AI responses keyed by prompt, used to serve identical
+    requests without a live provider call when the provider is unavailable."""
+
+    cache_key = models.CharField(max_length=64, unique=True)
+    response = models.TextField()
+    model_name = models.CharField(max_length=100, blank=True, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return f'Cached AI response {self.cache_key[:12]}'
